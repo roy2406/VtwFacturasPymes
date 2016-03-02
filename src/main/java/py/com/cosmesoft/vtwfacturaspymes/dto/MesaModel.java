@@ -66,4 +66,8 @@ public class MesaModel implements Entidad {
         this.estado = estado;
     }
 
+    @Override
+    public String toString() {
+        return this.descripcion; //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -11,7 +11,7 @@ import py.com.cosmesoft.vtwfacturaspymes.util.ApplicationConstant;
  *
  * @author rudy
  */
-public class ClienteModel implements Entidad {
+public class ClienteModel {
 
     private String codigo;
     private String direccion;
@@ -37,7 +37,7 @@ public class ClienteModel implements Entidad {
 //        email = cliente.getBswPersonas().getDirecElectronica();
 //
 //    }
-    @Override
+
     public String getCodigo() {
         return codigo;
     }
@@ -111,8 +111,7 @@ public class ClienteModel implements Entidad {
     }
 
     @Override
-    public String getDescripcion() {
+    public String toString(){
         return this.nombre;
     }
-
 }

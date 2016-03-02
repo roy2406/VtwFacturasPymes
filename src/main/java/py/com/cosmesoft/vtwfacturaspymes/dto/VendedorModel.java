@@ -12,7 +12,7 @@ import py.com.cosmesoft.vtwfacturaspymes.util.ApplicationConstant;
  *
  * @author rudy
  */
-public class VendedorModel implements Entidad{
+public class VendedorModel {
 
     private String codVendedor;
     private String codUsuario;
@@ -95,13 +95,4 @@ public class VendedorModel implements Entidad{
         return this.nombreVendedor; //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public String getCodigo() {
-      return  this.codVendedor;
-    }
-
-    @Override
-    public String getDescripcion() {
-        return this.nombreVendedor;
-    }
 }

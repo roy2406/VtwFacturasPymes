@@ -8,20 +8,25 @@ package py.com.cosmesoft.vtwfacturaspymes.view;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListSelectionModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import py.com.cosmesoft.vtwfacturaspymes.dto.ClienteModel;
 import py.com.cosmesoft.vtwfacturaspymes.dto.Entidad;
 import py.com.cosmesoft.vtwfacturaspymes.dto.MesaModel;
+import py.com.cosmesoft.vtwfacturaspymes.dto.PedidoCabeceraModel;
 import py.com.cosmesoft.vtwfacturaspymes.dto.VendedorModel;
 import py.com.cosmesoft.vtwfacturaspymes.util.ApplicationConstant;
 import py.com.cosmesoft.vtwfacturaspymes.util.ClienteClient;
 import py.com.cosmesoft.vtwfacturaspymes.util.GenericClient;
 import py.com.cosmesoft.vtwfacturaspymes.util.MesaClient;
+import py.com.cosmesoft.vtwfacturaspymes.util.PedidosClient;
 import py.com.cosmesoft.vtwfacturaspymes.util.VendedorClient;
 
 /**
@@ -44,6 +49,8 @@ public class JFrameLista extends javax.swing.JFrame {
         //this.papa.setEnabled(false);
         setSize(600, 600);
         setLocation(400, 100);
+        ImageIcon img = new ImageIcon(ApplicationConstant.CARPETA_IMAGENES + "\\logoSantafe.png");
+        setIconImage(img.getImage());
         initComponents();
     }
 
@@ -67,8 +74,24 @@ public class JFrameLista extends javax.swing.JFrame {
             jTable1.setModel(listarClientes());
         }else if(this.tipo.equals(ApplicationConstant.MES)){
             jTable1.setModel(listarMesas());
+        }else if(this.tipo.equals(ApplicationConstant.PED)){
+            jTable1.setModel(listarPedidos());
         }
-        ButtonColumn buttonColumn = new ButtonColumn(this, jTable1, 0);
+        /*Si queres que tenga boton descomentar esto*/
+        //ButtonColumn buttonColumn = new ButtonColumn(this, jTable1, 0);
+        jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                if (!event.getValueIsAdjusting()) {
+                    try {
+                        setObject(jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+                        dispose();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        dialogError("Ocurrio un error al elegir el vendedor.");
+                    }
+                }
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -97,7 +120,7 @@ public class JFrameLista extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private DefaultTableModel listarVendedores() {
-        String[] columnNames = {"", "Nombre", "Codigo"};
+        String[] columnNames = {"Nombre", "Codigo"};
         DefaultTableModel model = new DefaultTableModel() {
             public boolean isCellEditable(int row, int column) {
                 if (column == 0) {
@@ -114,29 +137,21 @@ public class JFrameLista extends javax.swing.JFrame {
             //objectList = c.recibirLista();
         } catch (Exception e) {
             e.printStackTrace();
-            dialogError("Ocurrio una excepción al momento de traer los "+this.tipo);
+            dialogError("Ocurrio una excepción al momento de traer los " + this.tipo);
         }
-        Object[] o = new Object[3];
+        Object[] o = new Object[2];
         for (VendedorModel t : objectList) {
+            //o[0] = t;
             o[0] = t;
-            o[1] = t.getDescripcion();
-            o[2] = t.getCodigo();
+            o[1] = t.getCodVendedor();
             model.addRow(o);
         }
-        //jTable1.setModel(model);
-        //SET CUSTOM RENDERER TO TEAMS COLUMN
-        //jTable1.getColumnModel().getColumn(0).setCellRenderer(new ButtonRenderer());
-        //SET CUSTOM EDITOR TO TEAMS COLUMN
-        //jTable1.getColumnModel().getColumn(0).setCellEditor(new ButtonEditor(new JTextField()));
-//        ButtonColumn buttonColumn = new ButtonColumn(this, jTable1, 0);
-//        jTable1.getTableHeader().setReorderingAllowed(false);
-//        jTable1.setSelectionModel(new ForcedListSelectionModel());
 
         return model;
     }
 
     private DefaultTableModel listarClientes() {
-        String[] columnNames = {"", "Nombre", "Codigo"};
+        String[] columnNames = {"Nombre", "Codigo"};
         DefaultTableModel model = new DefaultTableModel() {
             public boolean isCellEditable(int row, int column) {
                 if (column == 0) {
@@ -153,13 +168,13 @@ public class JFrameLista extends javax.swing.JFrame {
             //objectList = c.recibirLista();
         } catch (Exception e) {
             e.printStackTrace();
-            dialogError("Ocurrio una excepción al momento de traer los "+this.tipo);
+            dialogError("Ocurrio una excepción al momento de traer los " + this.tipo);
         }
-        Object[] o = new Object[3];
+        Object[] o = new Object[2];
         for (ClienteModel t : objectList) {
+            //o[0] = t;
             o[0] = t;
-            o[1] = t.getDescripcion();
-            o[2] = t.getCodigo();
+            o[1] = t.getCodigo();
             model.addRow(o);
         }
         //jTable1.setModel(model);
@@ -175,7 +190,7 @@ public class JFrameLista extends javax.swing.JFrame {
     }
 
     private DefaultTableModel listarMesas() {
-        String[] columnNames = {"", "Nombre", "Codigo"};
+        String[] columnNames = {"Nombre", "Codigo"};
         DefaultTableModel model = new DefaultTableModel() {
             public boolean isCellEditable(int row, int column) {
                 if (column == 0) {
@@ -192,13 +207,56 @@ public class JFrameLista extends javax.swing.JFrame {
             //objectList = c.recibirLista();
         } catch (Exception e) {
             e.printStackTrace();
-            dialogError("Ocurrio una excepción al momento de traer los "+this.tipo);
+            dialogError("Ocurrio una excepción al momento de traer los " + this.tipo);
         }
-        Object[] o = new Object[3];
+        Object[] o = new Object[2];
         for (MesaModel t : objectList) {
+            //o[0] = t;
             o[0] = t;
-            o[1] = t.getDescripcion();
-            o[2] = t.getCodigo();
+            o[1] = t.getCodigo();
+            model.addRow(o);
+        }
+        //jTable1.setModel(model);
+        //SET CUSTOM RENDERER TO TEAMS COLUMN
+        //jTable1.getColumnModel().getColumn(0).setCellRenderer(new ButtonRenderer());
+        //SET CUSTOM EDITOR TO TEAMS COLUMN
+        //jTable1.getColumnModel().getColumn(0).setCellEditor(new ButtonEditor(new JTextField()));
+        //ButtonColumn buttonColumn = new ButtonColumn(this, jTable1, 0);
+        jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.setSelectionModel(new ForcedListSelectionModel());
+
+        return model;
+    }
+
+    private DefaultTableModel listarPedidos() {
+        String[] columnNames = {"Numero", "Serie", "Fecha", "Nro. Ref.", "Cliente", "Total", "Mesa"};
+        DefaultTableModel model = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                if (column == 0) {
+                    return true;
+                }
+                return false;
+            }
+        };
+        model.setColumnIdentifiers(columnNames);
+        List<PedidoCabeceraModel> objectList = new ArrayList<PedidoCabeceraModel>();
+        try {
+            objectList = PedidosClient.recibirPedidos();
+            //GenericClient<T> c = new GenericClient<T>(this.PATH);
+            //objectList = c.recibirLista();
+        } catch (Exception e) {
+            e.printStackTrace();
+            dialogError("Ocurrio una excepción al momento de traer los " + this.tipo);
+        }
+        Object[] o = new Object[7];
+        for (PedidoCabeceraModel t : objectList) {
+            o[0] = t;
+            o[1] = t.getSerieComprobante();
+            o[2] = t.getFecha();
+            o[3] = t.getNroAutorizacion();
+            o[4] = t.getNombreVendedor();
+            o[5] = t.getTotalComprobate();
+            o[6] = t.getCodMesa();
             model.addRow(o);
         }
         //jTable1.setModel(model);
@@ -246,6 +304,8 @@ public class JFrameLista extends javax.swing.JFrame {
             papa.setClienteModel((ClienteModel) object);
         } else if (this.tipo.equals(ApplicationConstant.MES)) {
             papa.setMesaModel((MesaModel) object);
+        } else if (this.tipo.equals(ApplicationConstant.PED)) {
+            papa.setPedidoCabeceraModel((PedidoCabeceraModel) object);
         }
         //this.papa.setEnabled(true);
         this.object = object;

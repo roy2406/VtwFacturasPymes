@@ -17,6 +17,7 @@ public final class ApplicationConstant {
     public static final String DIRECCION = "http://localhost:8080/";
 
     public static final String COD_EMPRESA = "1";
+    public static final String COD_SUCURSAL = "01";
 
     /*ENTIDADES PATH*/
     public static final String GRUPO_PATH = "grpArticulo/getListaGruposbyEmpresa/{codEmpresa}";
@@ -24,6 +25,10 @@ public final class ApplicationConstant {
     public static final String CLIENTE_PATH = "clientes/getListaClientesbyEmpresa/{codEmpresa}";
     public static final String VENDEDOR_PATH = "vendedores/getListaVendedoresbyEmpresa/{codEmpresa}";
     public static final String MESAS_PATH = "mesas/getListaMesasbyEmpresabySucursal/{codEmpresa}/{codSucursal}";
+    public static final String TIPOS_COBROS_PATH = "tiposCobros/getTiposCobros";
+    public static final String USUARIO_PATH = "usuarios/getUsuario/{userName}";
+    public static final String SERIES_PATH = "series/getSeries/{userName}";
+    public static final String PEDIDOS_PATH = "mesas/getPedidosMesabyEmpresabySucursal/{codEmpresa}/{codSucursal}";
 
     /*CARPETAS*/
     public static final String CARPETA_ICONOS = "J:\\proyectos-cosmesoft\\VtwFacturasPymes\\src\\main\\java\\recursos\\icon";
@@ -33,5 +38,5 @@ public final class ApplicationConstant {
     public static final String VEN = "VendedorModel";
     public static final String MES = "MesaModel";
     public static final String CLI = "ClienteModel";
-
+    public static final String PED = "PedidoCabeceraModel";
 }

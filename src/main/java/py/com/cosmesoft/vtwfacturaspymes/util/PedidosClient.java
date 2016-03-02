@@ -11,33 +11,31 @@ import java.util.concurrent.Future;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
-import py.com.cosmesoft.vtwfacturaspymes.dto.ClienteModel;
-import py.com.cosmesoft.vtwfacturaspymes.dto.GrupoModel;
-import py.com.cosmesoft.vtwfacturaspymes.dto.MesaModel;
+import py.com.cosmesoft.vtwfacturaspymes.dto.PedidoCabeceraModel;
 import py.com.cosmesoft.vtwfacturaspymes.dto.VendedorModel;
 
 /**
  *
  * @author usuario
  */
-public class MesaClient {
-    
+public class PedidosClient {
+
     private static String baseUri;
 
-    public static List<MesaModel> recibirMesas() throws InterruptedException, ExecutionException {
+    public static List<PedidoCabeceraModel> recibirPedidos() throws InterruptedException, ExecutionException {
         baseUri = getBaseUri();
         Client client = ClientBuilder.newClient();
-        Future<List<MesaModel>> futureRespose = client
+        Future<List<PedidoCabeceraModel>> futureRespose = client
                 .target(baseUri)
-                .path(ApplicationConstant.MESAS_PATH)
+                .path(ApplicationConstant.PEDIDOS_PATH)
                 .resolveTemplate("codEmpresa", ApplicationConstant.COD_EMPRESA)
                 .resolveTemplate("codSucursal", ApplicationConstant.COD_SUCURSAL)
                 .request()
                 .async()
-                .get(new GenericType<List<MesaModel>>() {
+                .get(new GenericType<List<PedidoCabeceraModel>>() {
                 });
-          List<MesaModel> mesaList = futureRespose.get();
-        return mesaList;
+        List<PedidoCabeceraModel> pedidosList = futureRespose.get();
+        return pedidosList;
     }
 
     public static String getBaseUri() {
@@ -51,4 +49,5 @@ public class MesaClient {
         return builder.toString();
 
     }
+
 }

@@ -11,7 +11,7 @@ import javax.swing.UIManager;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
-import py.com.cosmesoft.vtwfacturaspymes.dto.Entidad;
+import py.com.cosmesoft.vtwfacturaspymes.interfaces.Entidad;
 import py.com.cosmesoft.vtwfacturaspymes.util.ApplicationConstant;
 
 class ButtonColumn extends AbstractCellEditor

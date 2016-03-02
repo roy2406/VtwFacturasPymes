@@ -18,16 +18,16 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import py.com.cosmesoft.vtwfacturaspymes.dto.ClienteModel;
-import py.com.cosmesoft.vtwfacturaspymes.dto.Entidad;
+import py.com.cosmesoft.vtwfacturaspymes.interfaces.Entidad;
 import py.com.cosmesoft.vtwfacturaspymes.dto.MesaModel;
 import py.com.cosmesoft.vtwfacturaspymes.dto.PedidoCabeceraModel;
 import py.com.cosmesoft.vtwfacturaspymes.dto.VendedorModel;
 import py.com.cosmesoft.vtwfacturaspymes.util.ApplicationConstant;
-import py.com.cosmesoft.vtwfacturaspymes.util.ClienteClient;
-import py.com.cosmesoft.vtwfacturaspymes.util.GenericClient;
-import py.com.cosmesoft.vtwfacturaspymes.util.MesaClient;
-import py.com.cosmesoft.vtwfacturaspymes.util.PedidosClient;
-import py.com.cosmesoft.vtwfacturaspymes.util.VendedorClient;
+import py.com.cosmesoft.vtwfacturaspymes.client.ClienteClient;
+import py.com.cosmesoft.vtwfacturaspymes.client.GenericClient;
+import py.com.cosmesoft.vtwfacturaspymes.client.MesaClient;
+import py.com.cosmesoft.vtwfacturaspymes.client.PedidosClient;
+import py.com.cosmesoft.vtwfacturaspymes.client.VendedorClient;
 
 /**
  *

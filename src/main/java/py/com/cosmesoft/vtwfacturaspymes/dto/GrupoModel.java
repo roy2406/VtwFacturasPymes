@@ -5,13 +5,11 @@
  */
 package py.com.cosmesoft.vtwfacturaspymes.dto;
 
-import py.com.cosmesoft.vtwfacturaspymes.util.ApplicationConstant;
-
 /**
  *
  * @author rudy
  */
-public class GrupoModel implements Entidad {
+public class GrupoModel {
 
     private Long id;
     private String codigo;

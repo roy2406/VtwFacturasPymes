@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package py.com.cosmesoft.vtwfacturaspymes.util;
+package py.com.cosmesoft.vtwfacturaspymes.client;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -11,30 +11,34 @@ import java.util.concurrent.Future;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.Response;
 import py.com.cosmesoft.vtwfacturaspymes.dto.GrupoModel;
-import py.com.cosmesoft.vtwfacturaspymes.dto.VendedorModel;
+import py.com.cosmesoft.vtwfacturaspymes.util.ApplicationConstant;
 
 /**
  *
- * @author usuario
+ * @author rudy
  */
-public class SerieClient {
-    
+public class GrupoClient {
+
     private static String baseUri;
 
-    public static List<String> recibirSeries(String userName) throws InterruptedException, ExecutionException {
+    public GrupoClient() {
+    }
+
+    public static List<GrupoModel> recibirGrupo() throws InterruptedException, ExecutionException {
         baseUri = getBaseUri();
         Client client = ClientBuilder.newClient();
-        Future<List<String>> futureRespose = client
+        Future<List<GrupoModel>> futureRespose = client
                 .target(baseUri)
-                .path(ApplicationConstant.SERIES_PATH)
-                .resolveTemplate("userName", userName)
+                .path(ApplicationConstant.GRUPO_PATH)
+                .resolveTemplate("codEmpresa", ApplicationConstant.COD_EMPRESA)
                 .request()
                 .async()
-                .get(new GenericType<List<String>>() {
+                .get(new GenericType<List<GrupoModel>>() {
                 });
-          List<String> serieList = futureRespose.get();
-        return serieList;
+          List<GrupoModel> gruposList = futureRespose.get();
+        return gruposList;
     }
 
     public static String getBaseUri() {
@@ -48,6 +52,4 @@ public class SerieClient {
         return builder.toString();
 
     }
-    
-
 }

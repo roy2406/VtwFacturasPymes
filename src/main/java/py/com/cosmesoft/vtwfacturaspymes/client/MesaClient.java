@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package py.com.cosmesoft.vtwfacturaspymes.util;
+package py.com.cosmesoft.vtwfacturaspymes.client;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -11,30 +11,34 @@ import java.util.concurrent.Future;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
+import py.com.cosmesoft.vtwfacturaspymes.dto.ClienteModel;
 import py.com.cosmesoft.vtwfacturaspymes.dto.GrupoModel;
+import py.com.cosmesoft.vtwfacturaspymes.dto.MesaModel;
 import py.com.cosmesoft.vtwfacturaspymes.dto.VendedorModel;
+import py.com.cosmesoft.vtwfacturaspymes.util.ApplicationConstant;
 
 /**
  *
  * @author usuario
  */
-public class VendedorClient {
+public class MesaClient {
     
     private static String baseUri;
 
-    public static List<VendedorModel> recibirVendedores() throws InterruptedException, ExecutionException {
+    public static List<MesaModel> recibirMesas() throws InterruptedException, ExecutionException {
         baseUri = getBaseUri();
         Client client = ClientBuilder.newClient();
-        Future<List<VendedorModel>> futureRespose = client
+        Future<List<MesaModel>> futureRespose = client
                 .target(baseUri)
-                .path(ApplicationConstant.VENDEDOR_PATH)
+                .path(ApplicationConstant.MESAS_PATH)
                 .resolveTemplate("codEmpresa", ApplicationConstant.COD_EMPRESA)
+                .resolveTemplate("codSucursal", ApplicationConstant.COD_SUCURSAL)
                 .request()
                 .async()
-                .get(new GenericType<List<VendedorModel>>() {
+                .get(new GenericType<List<MesaModel>>() {
                 });
-          List<VendedorModel> vendedorList = futureRespose.get();
-        return vendedorList;
+          List<MesaModel> mesaList = futureRespose.get();
+        return mesaList;
     }
 
     public static String getBaseUri() {
@@ -48,6 +52,4 @@ public class VendedorClient {
         return builder.toString();
 
     }
-    
-
 }

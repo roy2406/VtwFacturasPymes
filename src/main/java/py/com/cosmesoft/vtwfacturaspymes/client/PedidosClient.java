@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package py.com.cosmesoft.vtwfacturaspymes.util;
+package py.com.cosmesoft.vtwfacturaspymes.client;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -11,31 +11,32 @@ import java.util.concurrent.Future;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
-import py.com.cosmesoft.vtwfacturaspymes.dto.ClienteModel;
-import py.com.cosmesoft.vtwfacturaspymes.dto.GrupoModel;
-import py.com.cosmesoft.vtwfacturaspymes.dto.TiposCobrosModel;
+import py.com.cosmesoft.vtwfacturaspymes.dto.PedidoCabeceraModel;
 import py.com.cosmesoft.vtwfacturaspymes.dto.VendedorModel;
+import py.com.cosmesoft.vtwfacturaspymes.util.ApplicationConstant;
 
 /**
  *
  * @author usuario
  */
-public class TiposCobrosClient {
-    
+public class PedidosClient {
+
     private static String baseUri;
 
-    public static List<TiposCobrosModel> recibirTiposCobros() throws InterruptedException, ExecutionException {
+    public static List<PedidoCabeceraModel> recibirPedidos() throws InterruptedException, ExecutionException {
         baseUri = getBaseUri();
         Client client = ClientBuilder.newClient();
-        Future<List<TiposCobrosModel>> futureRespose = client
+        Future<List<PedidoCabeceraModel>> futureRespose = client
                 .target(baseUri)
-                .path(ApplicationConstant.TIPOS_COBROS_PATH)
+                .path(ApplicationConstant.PEDIDOS_PATH)
+                .resolveTemplate("codEmpresa", ApplicationConstant.COD_EMPRESA)
+                .resolveTemplate("codSucursal", ApplicationConstant.COD_SUCURSAL)
                 .request()
                 .async()
-                .get(new GenericType<List<TiposCobrosModel>>() {
+                .get(new GenericType<List<PedidoCabeceraModel>>() {
                 });
-          List<TiposCobrosModel> tiposCobrosList = futureRespose.get();
-        return tiposCobrosList;
+        List<PedidoCabeceraModel> pedidosList = futureRespose.get();
+        return pedidosList;
     }
 
     public static String getBaseUri() {
@@ -49,4 +50,5 @@ public class TiposCobrosClient {
         return builder.toString();
 
     }
+
 }

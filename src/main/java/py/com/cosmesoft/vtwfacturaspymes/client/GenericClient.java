@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package py.com.cosmesoft.vtwfacturaspymes.util;
+package py.com.cosmesoft.vtwfacturaspymes.client;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
@@ -14,9 +14,10 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
 import py.com.cosmesoft.vtwfacturaspymes.dto.ArticuloModel;
 import py.com.cosmesoft.vtwfacturaspymes.dto.ClienteModel;
-import py.com.cosmesoft.vtwfacturaspymes.dto.Entidad;
+import py.com.cosmesoft.vtwfacturaspymes.interfaces.Entidad;
 import py.com.cosmesoft.vtwfacturaspymes.dto.GrupoModel;
 import py.com.cosmesoft.vtwfacturaspymes.dto.VendedorModel;
+import py.com.cosmesoft.vtwfacturaspymes.util.ApplicationConstant;
 
 /**
  *

@@ -6,13 +6,12 @@
 package py.com.cosmesoft.vtwfacturaspymes.dto;
 
 import java.math.BigDecimal;
-import py.com.cosmesoft.vtwfacturaspymes.util.ApplicationConstant;
 
 /**
  *
  * @author rudy
  */
-public class ArticuloModel implements Entidad {
+public class ArticuloModel {
 
     private Long id;
     private String codigo;

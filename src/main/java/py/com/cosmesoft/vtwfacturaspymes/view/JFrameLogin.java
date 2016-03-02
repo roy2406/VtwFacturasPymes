@@ -15,8 +15,8 @@ import javax.swing.JOptionPane;
 import py.com.cosmesoft.vtwfacturaspymes.dto.UsuarioModel;
 import py.com.cosmesoft.vtwfacturaspymes.util.ApplicationConstant;
 import py.com.cosmesoft.vtwfacturaspymes.util.RSA;
-import py.com.cosmesoft.vtwfacturaspymes.util.SerieClient;
-import py.com.cosmesoft.vtwfacturaspymes.util.UsuarioClient;
+import py.com.cosmesoft.vtwfacturaspymes.client.SerieClient;
+import py.com.cosmesoft.vtwfacturaspymes.client.UsuarioClient;
 
 /**
  *

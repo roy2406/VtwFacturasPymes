@@ -10,7 +10,7 @@ package py.com.cosmesoft.vtwfacturaspymes.dto;
  *
  * @author rudy
  */
-public class MesaModel implements Entidad {
+public class MesaModel {
 
     private Long id;
     private String codigo;
@@ -40,7 +40,6 @@ public class MesaModel implements Entidad {
         this.id = id;
     }
 
-    @Override
     public String getCodigo() {
         return codigo;
     }
@@ -49,7 +48,6 @@ public class MesaModel implements Entidad {
         this.codigo = codigo;
     }
 
-    @Override
     public String getDescripcion() {
         return descripcion;
     }

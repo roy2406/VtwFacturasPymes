@@ -22,7 +22,7 @@ public final class ApplicationConstant {
     /*ENTIDADES PATH*/
     public static final String GRUPO_PATH = "grpArticulo/getListaGruposbyEmpresa/{codEmpresa}";
     public static final String ARTICULO_PATH = "articulos/getLazyListaArticulos/{codEmpresa}/{inicio}/{cantidad}/{filtro}/{codGrupo}";
-    public static final String CLIENTE_PATH = "clientes/getListaClientesLazy/{codEmpresa}/{inicio}/{cantidad}/{filtro}";
+    public static final String CLIENTE_PATH = "clientes/getListaClientesLazy/{codEmpresa}/{inicio}/{cantidad}/{filtroDescripcion}/{filtroCodigo}";
     public static final String CLIENTE_COD_PATH = "clientes/getClientebyCodigo/{codEmpresa}/{codCliente}";
     public static final String CLIENTE_CANTIDAD_PATH = "clientes/getCantidadClientes/{codEmpresa}";
     public static final String VENDEDOR_PATH = "vendedores/getListaVendedoresbyEmpresa/{codEmpresa}";

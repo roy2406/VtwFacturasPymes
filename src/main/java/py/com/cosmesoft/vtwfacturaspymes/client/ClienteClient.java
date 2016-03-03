@@ -25,7 +25,7 @@ public class ClienteClient {
 
     private static String baseUri;
 
-    public static List<ClienteModel> recibirClientes(String inicio, String cantidad, String filtro) throws InterruptedException, ExecutionException {
+    public static List<ClienteModel> recibirClientes(String inicio, String cantidad, String filtroDescripcion, String filtroCodigo) throws InterruptedException, ExecutionException {
         baseUri = getBaseUri();
         Client client = ClientBuilder.newClient();
         Future<List<ClienteModel>> futureRespose = client
@@ -34,7 +34,8 @@ public class ClienteClient {
                 .resolveTemplate("codEmpresa", ApplicationConstant.COD_EMPRESA)
                 .resolveTemplate("inicio", inicio)
                 .resolveTemplate("cantidad", cantidad)
-                .resolveTemplate("filtro", filtro)
+                .resolveTemplate("filtroDescripcion", filtroDescripcion)
+                .resolveTemplate("filtroCodigo", filtroCodigo)
                 .request()
                 .async()
                 .get(new GenericType<List<ClienteModel>>() {

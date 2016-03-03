@@ -46,7 +46,6 @@ public class JFrameLista extends javax.swing.JFrame {
     private String tipo;
     //private String inicio;
     private String cantidad;
-    private String filtro;
     private Long cantidadTotal;
     private String pagina;
     private String paginasTotales;
@@ -55,8 +54,8 @@ public class JFrameLista extends javax.swing.JFrame {
         this.papa = papa;
         this.tipo = tipo;
         //this.papa.setEnabled(false);
-        cantidad = "5";
-        pagina = "1";
+        cantidad = "10";
+        pagina = "0";
         getCantidadTotal();
         setSize(600, 600);
         //setLocation(400, 100);
@@ -121,7 +120,7 @@ public class JFrameLista extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "5", "10", "20" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10", "20", "30" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -158,6 +157,18 @@ public class JFrameLista extends javax.swing.JFrame {
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
+            }
+        });
+
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
+            }
+        });
+
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField2KeyPressed(evt);
             }
         });
 
@@ -269,7 +280,7 @@ public class JFrameLista extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         cantidad = jComboBox1.getSelectedItem().toString();
-        pagina = "1";
+        pagina = "0";
         jButton4.setEnabled(true);
         jButton3.setEnabled(true);
         jButton2.setEnabled(false);
@@ -281,9 +292,9 @@ public class JFrameLista extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Long inicioLong = Long.valueOf(pagina);
         inicioLong--;
-        if (inicioLong.compareTo(1L) >= 0) {
+        if (inicioLong.compareTo(0L) >= 0) {
             pagina = String.valueOf(inicioLong);
-            if (inicioLong.compareTo(1L) == 0) {
+            if (inicioLong.compareTo(0L) == 0) {
                 jButton2.setEnabled(false);
                 jButton1.setEnabled(false);
             }
@@ -295,7 +306,7 @@ public class JFrameLista extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        pagina = "1";
+        pagina = "0";
         jButton4.setEnabled(true);
         jButton3.setEnabled(true);
         jButton2.setEnabled(false);
@@ -313,6 +324,14 @@ public class JFrameLista extends javax.swing.JFrame {
         updateTabla();
         updateLabel();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+        updateTabla();
+    }//GEN-LAST:event_jTextField1KeyPressed
+
+    private void jTextField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyPressed
+        updateTabla();
+    }//GEN-LAST:event_jTextField2KeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -374,9 +393,16 @@ public class JFrameLista extends javax.swing.JFrame {
             Long p = Long.valueOf(pagina);
             Long c = Long.valueOf(cantidad);
             String inicio = String.valueOf(p * c);
-            String filtro = "*";
+            String filtroDescripcion = "*";
+            if (jTextField1.getText() != null && !jTextField1.getText().isEmpty()) {
+                filtroDescripcion = jTextField1.getText();
+            }
+            String filtroCodigo = "*";
+            if (jTextField2.getText() != null && !jTextField2.getText().isEmpty()) {
+                filtroCodigo = jTextField2.getText();
+            }
             //Map<String, Object> filtro = new HashMap<>();
-            objectList = ClienteClient.recibirClientes(inicio, cantidad, filtro);
+            objectList = ClienteClient.recibirClientes(inicio, cantidad, filtroDescripcion, filtroCodigo);
 
         } catch (Exception e) {
             e.printStackTrace();

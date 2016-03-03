@@ -8,6 +8,8 @@ package py.com.cosmesoft.vtwfacturaspymes.view;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.Document;
+import py.com.cosmesoft.vtwfacturaspymes.client.ClienteClient;
+import py.com.cosmesoft.vtwfacturaspymes.util.ApplicationConstant;
 
 /**
  *
@@ -27,11 +29,11 @@ class FiltroListener implements DocumentListener {
         updateInput(e);
     }
 
-    public void updateInput(DocumentEvent e) {
+    private void updateInput(DocumentEvent e) {
         Document doc = (Document) e.getDocument();
         try {
             System.out.println(">>>" + doc.getText(0, doc.getLength()));
-        }catch(Exception exc){
+        } catch (Exception exc) {
             exc.printStackTrace();
         }
     }

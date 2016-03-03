@@ -5,6 +5,8 @@
  */
 package py.com.cosmesoft.vtwfacturaspymes.view;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +35,11 @@ public class JFrameLogin extends javax.swing.JFrame {
 
     public JFrameLogin(JFrameForm jFrameForm) {
         this.jFrameForm = jFrameForm;
-        setLocation(400, 100);
+        //setLocation(400, 100);
         ImageIcon img = new ImageIcon(ApplicationConstant.CARPETA_IMAGENES + "\\logoSantafe.png");
         setIconImage(img.getImage());
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -168,8 +171,8 @@ public class JFrameLogin extends javax.swing.JFrame {
         RSA rsa = new RSA(tamPrimo, d, n);
         return rsa.desencriptar(password);
     }
-    
-        private String[] getSeries() {
+
+    private String[] getSeries() {
         String[] seriesArray = new String[0];
         List<String> seriesList = new ArrayList<String>();
         try {

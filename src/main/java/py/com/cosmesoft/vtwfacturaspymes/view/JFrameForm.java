@@ -42,6 +42,7 @@ import py.com.cosmesoft.vtwfacturaspymes.dto.UsuarioModel;
 import py.com.cosmesoft.vtwfacturaspymes.dto.VendedorModel;
 import py.com.cosmesoft.vtwfacturaspymes.util.ApplicationConstant;
 import py.com.cosmesoft.vtwfacturaspymes.client.ArticuloClient;
+import py.com.cosmesoft.vtwfacturaspymes.client.ClienteClient;
 import py.com.cosmesoft.vtwfacturaspymes.client.GenericClient;
 import py.com.cosmesoft.vtwfacturaspymes.client.GrupoClient;
 import py.com.cosmesoft.vtwfacturaspymes.client.SerieClient;
@@ -166,7 +167,7 @@ public class JFrameForm extends javax.swing.JFrame {
         jToolBar1.setRollover(true);
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(ApplicationConstant.CARPETA_ICONOS+"\\database-add.png"));
+        jButton1.setIcon(new javax.swing.ImageIcon(ApplicationConstant.CARPETA_ICONOS+"\\diskette.png"));
         jButton1.setText("Guardar");
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -341,7 +342,6 @@ public class JFrameForm extends javax.swing.JFrame {
                 jTextField25ActionPerformed(evt);
             }
         });
-        jTextField25.getDocument().addDocumentListener(new FiltroListener());
 
         jLabel28.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel28.setText("Pedido:");
@@ -362,6 +362,15 @@ public class JFrameForm extends javax.swing.JFrame {
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel29.setText("(*)Cliente:");
+
+        //jTextField25.addFocusListener(new FocusListenerImpl(this));
+        jTextField27.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField27FocusLost(evt);
+            }
+        });
+
+        jTextField28.setEditable(false);
 
         jButton22.setIcon(new javax.swing.ImageIcon(ApplicationConstant.CARPETA_ICONOS+"\\search.png"));
         jButton22.addActionListener(new java.awt.event.ActionListener() {
@@ -839,7 +848,9 @@ public class JFrameForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
-        // TODO add your handling code here:
+        JFrameCargaCliente frame
+                = new JFrameCargaCliente(this);
+        frame.setVisible(true);
     }//GEN-LAST:event_jButton23ActionPerformed
 
     private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
@@ -929,6 +940,24 @@ public class JFrameForm extends javax.swing.JFrame {
                 = new JFrameLista(this, ApplicationConstant.PED);
         frame.setVisible(true);
     }//GEN-LAST:event_jButton21ActionPerformed
+
+    private void jTextField27FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField27FocusLost
+        ClienteModel c = null;
+        try {
+            //System.err.println(">>>"+e.getComponent().getName());
+            c = ClienteClient.recibirClientebyCodigo(getjTextField27().getText());
+        } catch (Exception exc) {
+            //exc.printStackTrace();
+            //dialogError();
+            dialogWarning("No se trajo ningun registro.");
+        }
+        if (c != null) {
+            setClienteModel(c);
+        } else {
+            setClienteModel(new ClienteModel());
+            //dialogWarning();
+        }
+    }//GEN-LAST:event_jTextField27FocusLost
 
     /**
      * @param args the command line arguments
@@ -1054,6 +1083,13 @@ public class JFrameForm extends javax.swing.JFrame {
                 JOptionPane.ERROR_MESSAGE);
     }
 
+    private static void dialogWarning(String msj) {
+        JOptionPane.showMessageDialog(new JFrame(),
+                msj,
+                "WARNING",
+                JOptionPane.WARNING_MESSAGE);
+    }
+
     private void cargarTablaArt() {
         DefaultTableModel modelTableArt = (DefaultTableModel) jTable6.getModel();
         modelTableArt.setRowCount(0);
@@ -1162,12 +1198,12 @@ public class JFrameForm extends javax.swing.JFrame {
 
     public void setPedidoCabeceraModel(PedidoCabeceraModel pedidoCabeceraModel) {
         jTextField26.setText(
-                pedidoCabeceraModel.getTipoComprobante()+"-"+
-                pedidoCabeceraModel.getSerieComprobante()+"-"+
-                pedidoCabeceraModel.getNroComprobante());
+                pedidoCabeceraModel.getTipoComprobante() + "-"
+                + pedidoCabeceraModel.getSerieComprobante() + "-"
+                + pedidoCabeceraModel.getNroComprobante());
         this.pedidoCabeceraModel = pedidoCabeceraModel;
     }
-    
+
     private String[] getTiposCobros() {
         String[] tiposCobrosString = new String[0];
         List<TiposCobrosModel> tiposCobrosList = new ArrayList<TiposCobrosModel>();
@@ -1219,5 +1255,9 @@ public class JFrameForm extends javax.swing.JFrame {
 
     public void setSeries(String[] series) {
         jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(series));
+    }
+
+    public javax.swing.JTextField getjTextField27() {
+        return this.jTextField27;
     }
 }

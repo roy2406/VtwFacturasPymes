@@ -6,7 +6,9 @@
 package py.com.cosmesoft.vtwfacturaspymes.view;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -42,16 +44,30 @@ public class JFrameLista extends javax.swing.JFrame {
 
     private JFrameForm papa;
     private String tipo;
+    //private String inicio;
+    private String cantidad;
+    private String filtro;
+    private Long cantidadTotal;
+    private String pagina;
+    private String paginasTotales;
 
     public JFrameLista(JFrameForm papa, String tipo) {
         this.papa = papa;
         this.tipo = tipo;
         //this.papa.setEnabled(false);
+        cantidad = "5";
+        pagina = "1";
+        getCantidadTotal();
         setSize(600, 600);
-        setLocation(400, 100);
+        //setLocation(400, 100);
         ImageIcon img = new ImageIcon(ApplicationConstant.CARPETA_IMAGENES + "\\logoSantafe.png");
         setIconImage(img.getImage());
         initComponents();
+        jButton4.setEnabled(true);
+        jButton3.setEnabled(true);
+        jButton2.setEnabled(false);
+        jButton1.setEnabled(false);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -65,6 +81,17 @@ public class JFrameLista extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -94,38 +121,220 @@ public class JFrameLista extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "5", "10", "20" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setIcon(new javax.swing.ImageIcon(ApplicationConstant.CARPETA_ICONOS + "//previous.png"));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setIcon(new javax.swing.ImageIcon(ApplicationConstant.CARPETA_ICONOS + "//rewind.png"));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("(0 of 0)");
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        updateLabel();
+
+        jButton3.setIcon(new javax.swing.ImageIcon(ApplicationConstant.CARPETA_ICONOS + "//fast-forward.png"));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setIcon(new javax.swing.ImageIcon(ApplicationConstant.CARPETA_ICONOS + "//next.png"));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Descripcion:");
+
+        jLabel3.setText("Codigo:");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addGap(4, 4, 4)
+                        .addComponent(jButton2))
+                    .addComponent(jTextField1))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4))
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2, jButton3, jButton4});
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTextField1, jTextField2});
+
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton2, jButton3, jButton4});
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jTextField1, jTextField2});
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(87, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Long paginaLong = Long.valueOf(pagina);
+        paginaLong++;
+        Long totalLong = Long.valueOf(paginasTotales);
+        if (paginaLong.compareTo(totalLong) <= 0) {
+            pagina = String.valueOf(paginaLong);
+            if (paginaLong.compareTo(totalLong) == 0) {
+                jButton4.setEnabled(false);
+                jButton3.setEnabled(false);
+            }
+            jButton2.setEnabled(true);
+            jButton1.setEnabled(true);
+            updateLabel();
+        }
+        updateTabla();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        cantidad = jComboBox1.getSelectedItem().toString();
+        pagina = "1";
+        jButton4.setEnabled(true);
+        jButton3.setEnabled(true);
+        jButton2.setEnabled(false);
+        jButton1.setEnabled(false);
+        updateTabla();
+        updateLabel();
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Long inicioLong = Long.valueOf(pagina);
+        inicioLong--;
+        if (inicioLong.compareTo(1L) >= 0) {
+            pagina = String.valueOf(inicioLong);
+            if (inicioLong.compareTo(1L) == 0) {
+                jButton2.setEnabled(false);
+                jButton1.setEnabled(false);
+            }
+            jButton4.setEnabled(true);
+            jButton3.setEnabled(true);
+            updateLabel();
+        }
+        updateTabla();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        pagina = "1";
+        jButton4.setEnabled(true);
+        jButton3.setEnabled(true);
+        jButton2.setEnabled(false);
+        jButton1.setEnabled(false);
+        updateTabla();
+        updateLabel();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        pagina = paginasTotales;
+        jButton4.setEnabled(false);
+        jButton3.setEnabled(false);
+        jButton2.setEnabled(true);
+        jButton1.setEnabled(true);
+        updateTabla();
+        updateLabel();
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 
     private DefaultTableModel listarVendedores() {
+        jPanel1.setVisible(false);
         String[] columnNames = {"Nombre", "Codigo"};
         DefaultTableModel model = new DefaultTableModel() {
             public boolean isCellEditable(int row, int column) {
-                if (column == 0) {
-                    return true;
-                }
                 return false;
             }
         };
@@ -151,21 +360,24 @@ public class JFrameLista extends javax.swing.JFrame {
     }
 
     private DefaultTableModel listarClientes() {
+        jPanel1.setVisible(true);
         String[] columnNames = {"Nombre", "Codigo"};
         DefaultTableModel model = new DefaultTableModel() {
             public boolean isCellEditable(int row, int column) {
-                if (column == 0) {
-                    return true;
-                }
                 return false;
             }
         };
         model.setColumnIdentifiers(columnNames);
         List<ClienteModel> objectList = new ArrayList<ClienteModel>();
         try {
-            objectList = ClienteClient.recibirClientes();
-            //GenericClient<T> c = new GenericClient<T>(this.PATH);
-            //objectList = c.recibirLista();
+
+            Long p = Long.valueOf(pagina);
+            Long c = Long.valueOf(cantidad);
+            String inicio = String.valueOf(p * c);
+            String filtro = "*";
+            //Map<String, Object> filtro = new HashMap<>();
+            objectList = ClienteClient.recibirClientes(inicio, cantidad, filtro);
+
         } catch (Exception e) {
             e.printStackTrace();
             dialogError("Ocurrio una excepción al momento de traer los " + this.tipo);
@@ -190,12 +402,10 @@ public class JFrameLista extends javax.swing.JFrame {
     }
 
     private DefaultTableModel listarMesas() {
+        jPanel1.setVisible(false);
         String[] columnNames = {"Nombre", "Codigo"};
         DefaultTableModel model = new DefaultTableModel() {
             public boolean isCellEditable(int row, int column) {
-                if (column == 0) {
-                    return true;
-                }
                 return false;
             }
         };
@@ -229,12 +439,10 @@ public class JFrameLista extends javax.swing.JFrame {
     }
 
     private DefaultTableModel listarPedidos() {
+        jPanel1.setVisible(false);
         String[] columnNames = {"Numero", "Serie", "Fecha", "Nro. Ref.", "Cliente", "Total", "Mesa"};
         DefaultTableModel model = new DefaultTableModel() {
             public boolean isCellEditable(int row, int column) {
-                if (column == 0) {
-                    return true;
-                }
                 return false;
             }
         };
@@ -309,5 +517,60 @@ public class JFrameLista extends javax.swing.JFrame {
         }
         //this.papa.setEnabled(true);
         this.object = object;
+    }
+
+    private void getCantidadTotal() {
+        try {
+            switch (this.tipo) {
+                case ApplicationConstant.CLI:
+                    cantidadTotal = ClienteClient.cantidadClientes();
+                    break;
+                default:
+                    cantidadTotal = 0L;
+                    break;
+            }
+        } catch (Exception e) {
+            dialogError("Ocurrio un error al momento de traer la cantidad total.");
+            cantidadTotal = 0L;
+        }
+    }
+
+    private void updateLabel() {
+        paginasTotales = String.valueOf(cantidadTotal / Long.parseLong(cantidad));
+        String text = "(" + pagina + " of " + paginasTotales + ")";
+        this.jLabel1.setText(text);
+    }
+
+    private void updateTabla() {
+        switch (this.tipo) {
+            case ApplicationConstant.VEN:
+                jTable1.setModel(listarVendedores());
+                break;
+            case ApplicationConstant.CLI:
+                jTable1.setModel(listarClientes());
+                break;
+            case ApplicationConstant.MES:
+                jTable1.setModel(listarMesas());
+                break;
+            case ApplicationConstant.PED:
+                jTable1.setModel(listarPedidos());
+                break;
+            default:
+                break;
+        }
+
+        jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                if (!event.getValueIsAdjusting()) {
+                    try {
+                        setObject(jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+                        dispose();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        dialogError("Ocurrio un error al elegir el vendedor.");
+                    }
+                }
+            }
+        });
     }
 }

@@ -87,7 +87,7 @@
                   <Font name="Tahoma" size="12" style="1"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                  <Connection code="new javax.swing.ImageIcon(ApplicationConstant.CARPETA_ICONOS+&quot;\\database-add.png&quot;)" type="code"/>
+                  <Connection code="new javax.swing.ImageIcon(ApplicationConstant.CARPETA_ICONOS+&quot;\\diskette.png&quot;)" type="code"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Guardar"/>
                 <Property name="horizontalTextPosition" type="int" value="4"/>
@@ -517,9 +517,6 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField25ActionPerformed"/>
               </Events>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jTextField25.getDocument().addDocumentListener(new FiltroListener());"/>
-              </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel28">
               <Properties>
@@ -556,8 +553,17 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField27">
+              <Events>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField27FocusLost"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="//jTextField25.addFocusListener(new FocusListenerImpl(this));"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField28">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="jButton22">
               <Properties>

@@ -8,9 +8,11 @@ package py.com.cosmesoft.vtwfacturaspymes.view;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.MathContext;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -68,6 +70,7 @@ public class JFrameForm extends javax.swing.JFrame {
     private MesaModel mesaModel;
     private PedidoCabeceraModel pedidoCabeceraModel;
     private UsuarioModel usuarioLogueado;
+    private TiposCobrosModel tiposCobrosModel;
     //private List<PedidoCabeceraModel> pedidoCabeceraList;
 
     public JFrameForm() {
@@ -125,7 +128,7 @@ public class JFrameForm extends javax.swing.JFrame {
         jButton23 = new javax.swing.JButton();
         jLabel30 = new javax.swing.JLabel();
         jTextField29 = new javax.swing.JTextField();
-        jComboBox6 = new javax.swing.JComboBox<>();
+        jComboBox6 = new javax.swing.JComboBox<TiposCobrosModel>();
         jLabel31 = new javax.swing.JLabel();
         jXDatePicker1 = new org.jdesktop.swingx.JXDatePicker();
         jPanel4 = new javax.swing.JPanel();
@@ -183,6 +186,11 @@ public class JFrameForm extends javax.swing.JFrame {
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton2);
 
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -389,12 +397,13 @@ public class JFrameForm extends javax.swing.JFrame {
         jLabel30.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel30.setText("RUC:");
 
-        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<>(getTiposCobros()));
+        jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<TiposCobrosModel>(getTiposCobros()));
         jComboBox6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox6ActionPerformed(evt);
             }
         });
+        tiposCobrosModel = (TiposCobrosModel)jComboBox6.getSelectedItem();
 
         jLabel31.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel31.setText("Tipo de pago:");
@@ -576,12 +585,21 @@ public class JFrameForm extends javax.swing.JFrame {
         jTable4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         DefaultTableModel modelTableArtEnvio = new DefaultTableModel() {
             public boolean isCellEditable(int row, int column) {
+                if(column == 0 || column == 4){
+                    return true;
+                }
                 return false;
             }
         };
-        String[] columnNamesTableArtEnvio = {"", "", "Cod. Art.", "Grup. Art.", "Descripción", "Cantidad", "Precio", "Desc.", "Monto Total"};
+        String[] columnNamesTableArtEnvio = {"", "Cod. Art.", "Grup. Art.", "Descripción", "Cantidad", "Precio", "Desc.", "Monto Total"};
         modelTableArtEnvio.setColumnIdentifiers(columnNamesTableArtEnvio);
         jTable4.setModel(modelTableArtEnvio);
+        ButtonColumn buttonColumn = new ButtonColumn(jTable4,0,ApplicationConstant.ELIMINAR);
+        jTable4.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jTable4PropertyChange(evt);
+            }
+        });
         jScrollPane4.setViewportView(jTable4);
 
         DefaultTableModel modelTableArt = new DefaultTableModel() {
@@ -677,26 +695,41 @@ public class JFrameForm extends javax.swing.JFrame {
         jLabel34.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel34.setText("Exentas:");
 
+        jTextField32.setEditable(false);
+
         jLabel35.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel35.setText("IVA 5%:");
 
+        jTextField33.setEditable(false);
+
+        jTextField34.setEditable(false);
+
+        jTextField35.setEditable(false);
         jTextField35.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField35ActionPerformed(evt);
             }
         });
 
+        jTextField36.setEditable(false);
+
+        jTextField37.setEditable(false);
         jTextField37.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField37ActionPerformed(evt);
             }
         });
 
+        jTextField38.setEditable(false);
+
+        jTextField39.setEditable(false);
         jTextField39.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField39ActionPerformed(evt);
             }
         });
+
+        jTextField40.setEditable(false);
 
         jLabel36.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel36.setText("IVA 10%:");
@@ -854,7 +887,7 @@ public class JFrameForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton23ActionPerformed
 
     private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
-        // TODO add your handling code here:
+        this.tiposCobrosModel = (TiposCobrosModel) jComboBox6.getSelectedItem();
     }//GEN-LAST:event_jComboBox6ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
@@ -959,6 +992,58 @@ public class JFrameForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextField27FocusLost
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        setMesaModel(new MesaModel());
+        setVendedorModel(new VendedorModel());
+        setClienteModel(new ClienteModel());
+        setPedidoCabeceraModel(new PedidoCabeceraModel());
+        jTextField22.setText(null);
+        jTextField29.setText(null);
+        jTextField26.setText(null);
+
+        /*LIMPIAR TABLA DE ARTICULOS*/
+        DefaultTableModel dm = (DefaultTableModel) jTable4.getModel();
+        int rowCount = dm.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            dm.removeRow(i);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTable4PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTable4PropertyChange
+        if (jTable4.getEditingColumn() >= 0 && jTable4.getEditingRow() >= 0) {
+            int row = jTable4.getEditingRow();
+
+            DefaultTableModel modelTableArt = (DefaultTableModel) jTable4.getModel();
+
+            DecimalFormat df = new DecimalFormat();
+            df.setMaximumFractionDigits(0);
+            df.setMinimumFractionDigits(0);
+
+//            DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+//            dfs.setGroupingSeparator('.');
+//            String pattern = df1.toPattern();
+//            DecimalFormat df2 = new DecimalFormat(pattern, dfs);
+
+            String precioStr = (String) modelTableArt.getValueAt(row, 5);
+            String cantidadStr = (String) modelTableArt.getValueAt(row, 4);
+            //System.out.println(">" + precioStr + " >" + cantidadStr);
+            BigDecimal precio = BigDecimal.ZERO;
+            BigDecimal cantidad = BigDecimal.ZERO;
+            try {
+                precio = new BigDecimal((long) df.parse(precioStr));
+                cantidad = new BigDecimal((long) df.parse(cantidadStr));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            BigDecimal montoTotal = precio.multiply(cantidad);
+            modelTableArt.setValueAt(df.format(montoTotal), row, 7);
+
+            jTable4.setModel(modelTableArt);
+            modelTableArt.fireTableDataChanged();
+        }
+
+    }//GEN-LAST:event_jTable4PropertyChange
+
     /**
      * @param args the command line arguments
      */
@@ -1017,7 +1102,7 @@ public class JFrameForm extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JComboBox<String> jComboBox5;
-    private javax.swing.JComboBox<String> jComboBox6;
+    private javax.swing.JComboBox<TiposCobrosModel> jComboBox6;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
@@ -1115,13 +1200,13 @@ public class JFrameForm extends javax.swing.JFrame {
 
         /*BUSQUEDA DE SI YA EXISTE EL ARTICULO*/
         for (int i = 0; i < modelTableArt.getRowCount(); i++) {
-            String codigo = (String) modelTableArt.getValueAt(i, 2);
+            String codigo = (String) modelTableArt.getValueAt(i, 1);
             if (codigo.equals(a.getCodigo())) {
-                BigDecimal cantidad = (BigDecimal) modelTableArt.getValueAt(i, 5);
+                BigDecimal cantidad = (BigDecimal) modelTableArt.getValueAt(i, 4);
                 cantidad = cantidad.add(BigDecimal.ONE);
-                modelTableArt.setValueAt(cantidad, i, 5);
+                modelTableArt.setValueAt(cantidad, i, 4);
                 BigDecimal montoTotal = a.getPrecioBase().multiply(cantidad);
-                modelTableArt.setValueAt(df.format(montoTotal), i, 8);
+                modelTableArt.setValueAt(df.format(montoTotal), i, 7);
                 jTable4.setModel(modelTableArt);
                 modelTableArt.fireTableDataChanged();
                 return;
@@ -1129,15 +1214,14 @@ public class JFrameForm extends javax.swing.JFrame {
         }
 
         /*SI NO EXISTE AGREGAMOS UN NUEVO ARTICULO*/
-        Object[] o = new Object[9];
+        Object[] o = new Object[8];
         o[0] = "";
-        o[1] = "";
-        o[2] = a.getCodigo();
-        o[3] = a.getGrupoModel().getDescripcion();
-        o[4] = a;
-        o[5] = BigDecimal.ONE;
-        o[6] = df.format(a.getPrecioBase());
-        o[8] = df.format(a.getPrecioBase());
+        o[1] = a.getCodigo();
+        o[2] = a.getGrupoModel().getDescripcion();
+        o[3] = a;
+        o[4] = BigDecimal.ONE;
+        o[5] = df.format(a.getPrecioBase());
+        o[7] = df.format(a.getPrecioBase());
         modelTableArt.addRow(o);
         jTable4.setModel(modelTableArt);
         modelTableArt.fireTableDataChanged();
@@ -1204,20 +1288,18 @@ public class JFrameForm extends javax.swing.JFrame {
         this.pedidoCabeceraModel = pedidoCabeceraModel;
     }
 
-    private String[] getTiposCobros() {
-        String[] tiposCobrosString = new String[0];
+    private TiposCobrosModel[] getTiposCobros() {
+        TiposCobrosModel[] tiposCobrosArray = null;
         List<TiposCobrosModel> tiposCobrosList = new ArrayList<TiposCobrosModel>();
         try {
             tiposCobrosList = TiposCobrosClient.recibirTiposCobros();
-            tiposCobrosString = new String[tiposCobrosList.size()];
-            for (int i = 0; i < tiposCobrosString.length; i++) {
-                tiposCobrosString[i] = tiposCobrosList.get(i).getDescripcion();
-            }
+            tiposCobrosArray = new TiposCobrosModel[tiposCobrosList.size()];
+            tiposCobrosArray = tiposCobrosList.toArray(tiposCobrosArray);
         } catch (Exception e) {
             e.printStackTrace();
             dialogError();
         }
-        return tiposCobrosString;
+        return tiposCobrosArray;
     }
 
     private String[] getSeries() {

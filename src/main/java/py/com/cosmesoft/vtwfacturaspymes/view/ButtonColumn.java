@@ -6,8 +6,10 @@ import java.awt.event.ActionListener;
 import javax.swing.AbstractCellEditor;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
@@ -21,14 +23,14 @@ class ButtonColumn extends AbstractCellEditor
     private JButton renderButton;
     private JButton editButton;
     private String text;
-    private JFrameLista jFrame;
-    private Object object;
- 
-    public ButtonColumn(JFrameLista jFrame,JTable table, int column) {
+    private String tipo;
+    private int row;
+
+    public ButtonColumn(JTable table, int column, String tipo) {
         super();
+        this.tipo = tipo;
         this.table = table;
         renderButton = new JButton();
-        this.jFrame = jFrame;
         editButton = new JButton();
         editButton.setFocusPainted(false);
         editButton.addActionListener(this);
@@ -50,8 +52,13 @@ class ButtonColumn extends AbstractCellEditor
             renderButton.setForeground(table.getForeground());
             renderButton.setBackground(UIManager.getColor("Button.background"));
         }
-        renderButton.setIcon(new javax.swing.ImageIcon(
-                ApplicationConstant.CARPETA_ICONOS+"\\accept.png"));
+        if (this.tipo.equals(ApplicationConstant.ELIMINAR)) {
+            renderButton.setIcon(new javax.swing.ImageIcon(
+                    ApplicationConstant.CARPETA_ICONOS + "\\bin.png"));
+        } else if (this.tipo.equals(ApplicationConstant.EDITAR)) {
+            renderButton.setIcon(new javax.swing.ImageIcon(
+                    ApplicationConstant.CARPETA_ICONOS + "\\compose-4.png"));
+        }
 
         //renderButton.setText((value == null) ? "" : value.toString());
         return renderButton;
@@ -59,9 +66,7 @@ class ButtonColumn extends AbstractCellEditor
 
     public Component getTableCellEditorComponent(
             JTable table, Object value, boolean isSelected, int row, int column) {
-        //text = (value == null) ? "" : value.toString();
-        //editButton.setText(text);
-        this.object = value;
+        this.row = row;
         return editButton;
     }
 
@@ -71,8 +76,14 @@ class ButtonColumn extends AbstractCellEditor
 
     public void actionPerformed(ActionEvent e) {
         fireEditingStopped();
-        //System.out.println(this.object + " : " + table.getSelectedRow());
-        jFrame.setObject(object);
-        jFrame.dispose();
+        //System.out.println("ROW : " + table.getSelectedRow() + "ROW : " + row);
+        DefaultTableModel dm = (DefaultTableModel) table.getModel();
+        if (tipo.equals(ApplicationConstant.ELIMINAR)) {
+            int dialogResult = JOptionPane.showConfirmDialog(null, 
+                    "Esta seguro que desea eliminar el registro?", "Warning", JOptionPane.YES_NO_OPTION);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                dm.removeRow(row);
+            }
+        }
     }
 }

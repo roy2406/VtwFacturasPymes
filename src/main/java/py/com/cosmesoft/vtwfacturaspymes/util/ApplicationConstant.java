@@ -41,4 +41,8 @@ public final class ApplicationConstant {
     public static final String MES = "MesaModel";
     public static final String CLI = "ClienteModel";
     public static final String PED = "PedidoCabeceraModel";
+
+    /*VARIOS*/
+    public static final String ELIMINAR = "ELIMINAR_BTN";
+    public static final String EDITAR = "EDITAR_BTN";
 }

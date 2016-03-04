@@ -5,6 +5,9 @@
  */
 package py.com.cosmesoft.vtwfacturaspymes.util;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 /**
  *
  * @author usuario
@@ -45,4 +48,5 @@ public final class ApplicationConstant {
     /*VARIOS*/
     public static final String ELIMINAR = "ELIMINAR_BTN";
     public static final String EDITAR = "EDITAR_BTN";
+    public static final BigDecimal DOLAR = new BigDecimal(5670);
 }

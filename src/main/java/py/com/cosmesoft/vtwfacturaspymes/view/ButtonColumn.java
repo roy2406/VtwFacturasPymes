@@ -3,6 +3,8 @@ package py.com.cosmesoft.vtwfacturaspymes.view;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import javax.swing.AbstractCellEditor;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,9 +27,11 @@ class ButtonColumn extends AbstractCellEditor
     private String text;
     private String tipo;
     private int row;
+    private JFrameForm jFrameForm;
 
-    public ButtonColumn(JTable table, int column, String tipo) {
+    public ButtonColumn(JFrameForm jFrameForm, JTable table, int column, String tipo) {
         super();
+        this.jFrameForm = jFrameForm;
         this.tipo = tipo;
         this.table = table;
         renderButton = new JButton();
@@ -76,14 +80,30 @@ class ButtonColumn extends AbstractCellEditor
 
     public void actionPerformed(ActionEvent e) {
         fireEditingStopped();
-        //System.out.println("ROW : " + table.getSelectedRow() + "ROW : " + row);
-        DefaultTableModel dm = (DefaultTableModel) table.getModel();
+
         if (tipo.equals(ApplicationConstant.ELIMINAR)) {
-            int dialogResult = JOptionPane.showConfirmDialog(null, 
+            int dialogResult = JOptionPane.showConfirmDialog(null,
                     "Esta seguro que desea eliminar el registro?", "Warning", JOptionPane.YES_NO_OPTION);
             if (dialogResult == JOptionPane.YES_OPTION) {
-                dm.removeRow(row);
+                eliminarFila();
             }
         }
+    }
+
+    private void eliminarFila() {
+        DefaultTableModel dm = (DefaultTableModel) table.getModel();
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+        df.setMinimumFractionDigits(2);
+        BigDecimal total = BigDecimal.ZERO;
+        String totalStr = (String) table.getValueAt(row, 7);
+        try {
+            total = new BigDecimal((long) df.parse(totalStr));
+        } catch (Exception exc) {
+            exc.printStackTrace();
+        }
+        this.jFrameForm.updateTotales(total.negate());
+        this.jFrameForm.uptadeVuelto();
+        dm.removeRow(row);
     }
 }

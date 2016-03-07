@@ -11,7 +11,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
 import py.com.cosmesoft.vtwfacturaspymes.dto.ClienteModel;
 import py.com.cosmesoft.vtwfacturaspymes.dto.GrupoModel;
 import py.com.cosmesoft.vtwfacturaspymes.dto.VendedorModel;
@@ -73,6 +75,28 @@ public class ClienteClient {
                 });
         Long clienteCantidad = futureRespose.get();
         return clienteCantidad;
+    }
+
+    public static ClienteModel cargaRapida(ClienteModel clienteModel,
+            String codVendedor,
+            boolean esPersonaFisica,
+            String sexo) throws InterruptedException, ExecutionException {
+        baseUri = getBaseUri();
+        Client client = ClientBuilder.newClient();
+        Future<ClienteModel> futureRespose = client
+                .target(baseUri)
+                .path(ApplicationConstant.CLIENTE_CARGA_PATH)
+                .resolveTemplate("codEmpresa", ApplicationConstant.COD_EMPRESA)
+                .resolveTemplate("codVendedor", codVendedor)
+                .resolveTemplate("esPersonaFisica", esPersonaFisica)
+                .resolveTemplate("sexo", sexo)
+                .request()
+                .async()
+                .post(Entity.entity(clienteModel, MediaType.APPLICATION_JSON + ";charset=utf-8"),
+                        ClienteModel.class);
+
+        ClienteModel clienteABM = futureRespose.get();
+        return clienteABM;
     }
 
     public static String getBaseUri() {

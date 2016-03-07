@@ -176,11 +176,6 @@ public class JFrameForm extends javax.swing.JFrame {
         jButton1.setIcon(new javax.swing.ImageIcon(ApplicationConstant.CARPETA_ICONOS+"\\diskette.png"));
         jButton1.setText("Guardar");
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
         jToolBar1.add(jButton1);
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -202,11 +197,6 @@ public class JFrameForm extends javax.swing.JFrame {
         jButton3.setFocusable(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
         jToolBar1.add(jButton3);
 
         jButton4.setIcon(new javax.swing.ImageIcon(ApplicationConstant.CARPETA_ICONOS+"\\questionmark_16x.png"));
@@ -247,15 +237,11 @@ public class JFrameForm extends javax.swing.JFrame {
         jToolBar3.setRollover(true);
 
         jCheckBox1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jCheckBox1.setSelected(true);
         jCheckBox1.setText("Imprimir Ticket:");
         jCheckBox1.setFocusable(false);
         jCheckBox1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jCheckBox1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
         jToolBar3.add(jCheckBox1);
 
         jCheckBox2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -290,11 +276,6 @@ public class JFrameForm extends javax.swing.JFrame {
         jTabbedPane1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FCO", "FCR", "NCR" }));
-        jComboBox4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox4ActionPerformed(evt);
-            }
-        });
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel11.setText("Tipo:");
@@ -303,20 +284,9 @@ public class JFrameForm extends javax.swing.JFrame {
         jLabel23.setText("Serie/Nro:");
 
         jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{""}));
-        jComboBox5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox5ActionPerformed(evt);
-            }
-        });
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel24.setText("Número:");
-
-        jTextField22.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField22ActionPerformed(evt);
-            }
-        });
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel25.setText("(*)Fecha:");
@@ -332,11 +302,6 @@ public class JFrameForm extends javax.swing.JFrame {
         jLabel26.setText("(*)Mozo:");
 
         jTextField24.setEditable(false);
-        jTextField24.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField24ActionPerformed(evt);
-            }
-        });
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel27.setText("Mesa:");
@@ -348,21 +313,10 @@ public class JFrameForm extends javax.swing.JFrame {
             }
         });
 
-        jTextField25.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField25ActionPerformed(evt);
-            }
-        });
-
         jLabel28.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel28.setText("Pedido:");
 
         jTextField26.setEditable(false);
-        jTextField26.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField26ActionPerformed(evt);
-            }
-        });
 
         jButton21.setIcon(new javax.swing.ImageIcon(ApplicationConstant.CARPETA_ICONOS+"\\search.png"));
         jButton21.addActionListener(new java.awt.event.ActionListener() {
@@ -406,11 +360,6 @@ public class JFrameForm extends javax.swing.JFrame {
         jLabel30.setText("RUC:");
 
         jComboBox6.setModel(new javax.swing.DefaultComboBoxModel<TiposCobrosModel>(getTiposCobros()));
-        jComboBox6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox6ActionPerformed(evt);
-            }
-        });
         tiposCobrosModel = (TiposCobrosModel)jComboBox6.getSelectedItem();
 
         jLabel31.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -642,7 +591,7 @@ public class JFrameForm extends javax.swing.JFrame {
             }
         });*/
 
-        jTable6.addMouseListener(new MouseAdapter() {
+        /*jTable6.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 int row = jTable6.rowAtPoint(evt.getPoint());
                 int col = jTable6.columnAtPoint(evt.getPoint());
@@ -652,6 +601,11 @@ public class JFrameForm extends javax.swing.JFrame {
                     cargarTablaArtEnvio(aux);
                     //System.out.println(">>>row:"+row+">>>col:"+col);
                 }
+            }
+        });*/
+        jTable6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable6MouseClicked(evt);
             }
         });
         jScrollPane6.setViewportView(jTable6);
@@ -895,18 +849,6 @@ public class JFrameForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void jTextField31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField31ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField31ActionPerformed
@@ -942,6 +884,19 @@ public class JFrameForm extends javax.swing.JFrame {
         for (int i = rowCount - 1; i >= 0; i--) {
             dm.removeRow(i);
         }
+
+        /*LIMPIAR PANEL TOTALES*/
+        jTextField30.setText(null);
+        jTextField31.setText(null);
+        jTextField32.setText(null);
+        jTextField33.setText(null);
+        jTextField34.setText(null);
+        jTextField35.setText(null);
+        jTextField36.setText(null);
+        jTextField37.setText(null);
+        jTextField38.setText(null);
+        jTextField39.setText(null);
+        jTextField40.setText(null);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTable4PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTable4PropertyChange
@@ -981,10 +936,6 @@ public class JFrameForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTable4PropertyChange
 
-    private void jComboBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox6ActionPerformed
-        this.tiposCobrosModel = (TiposCobrosModel) jComboBox6.getSelectedItem();
-    }//GEN-LAST:event_jComboBox6ActionPerformed
-
     private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
         JFrameCargaCliente frame
                 = new JFrameCargaCliente(this);
@@ -1021,41 +972,17 @@ public class JFrameForm extends javax.swing.JFrame {
         frame.setVisible(true);
     }//GEN-LAST:event_jButton21ActionPerformed
 
-    private void jTextField26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField26ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField26ActionPerformed
-
-    private void jTextField25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField25ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField25ActionPerformed
-
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
         JFrameLista frame
                 = new JFrameLista(this, ApplicationConstant.VEN);
         frame.setVisible(true);
     }//GEN-LAST:event_jButton20ActionPerformed
 
-    private void jTextField24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField24ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField24ActionPerformed
-
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
         JFrameLista frame
                 = new JFrameLista(this, ApplicationConstant.MES);
         frame.setVisible(true);
     }//GEN-LAST:event_jToggleButton2ActionPerformed
-
-    private void jTextField22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField22ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField22ActionPerformed
-
-    private void jComboBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox5ActionPerformed
-
-    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox4ActionPerformed
 
     private void jTextField36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField36ActionPerformed
         // TODO add your handling code here:
@@ -1073,6 +1000,17 @@ public class JFrameForm extends javax.swing.JFrame {
             uptadeVuelto();
         }
     }//GEN-LAST:event_jTextField30KeyReleased
+
+    private void jTable6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable6MouseClicked
+        int row = jTable6.rowAtPoint(evt.getPoint());
+        int col = jTable6.columnAtPoint(evt.getPoint());
+        if (row >= 0 && col >= 0) {
+            ArticuloModel aux = (ArticuloModel) jTable6.getValueAt(row, 0);
+            articuloListEnvio.add(aux);
+            cargarTablaArtEnvio(aux);
+            //System.out.println(">>>row:"+row+">>>col:"+col);
+        }
+    }//GEN-LAST:event_jTable6MouseClicked
 
     /**
      * @param args the command line arguments
@@ -1332,26 +1270,7 @@ public class JFrameForm extends javax.swing.JFrame {
         }
     }
 
-    public class ForcedListSelectionModel extends DefaultListSelectionModel {
-
-        public ForcedListSelectionModel() {
-            setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        }
-
-        @Override
-        public void clearSelection() {
-        }
-
-        @Override
-        public void removeSelectionInterval(int index0, int index1) {
-        }
-    }
-
-//    private void createFrame(Entidad entidad) {
-//        JFrameLista<Entidad> frame = new JFrameLista(this);
-//        frame.setVisible(true);
-//
-//    }
+    
     public VendedorModel getVendedorModel() {
         return vendedorModel;
     }
@@ -1447,4 +1366,7 @@ public class JFrameForm extends javax.swing.JFrame {
     public javax.swing.JTextField getjTextField27() {
         return this.jTextField27;
     }
+    
+    //<editor-fold defaultstate="collapsed" desc="Lazy list Accesos">
+    //</editor-fold>
 }

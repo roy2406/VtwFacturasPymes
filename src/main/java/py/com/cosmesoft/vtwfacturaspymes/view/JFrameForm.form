@@ -97,9 +97,6 @@
                 <Property name="text" type="java.lang.String" value="Guardar"/>
                 <Property name="horizontalTextPosition" type="int" value="4"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButton2">
               <Properties>
@@ -131,9 +128,6 @@
                 <Property name="horizontalTextPosition" type="int" value="4"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButton4">
               <Properties>
@@ -209,14 +203,12 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="12" style="1"/>
                 </Property>
+                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Imprimir Ticket:"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="2"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox1ActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JCheckBox" name="jCheckBox2">
               <Properties>
@@ -420,9 +412,6 @@
                   <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;FCO&quot;, &quot;FCR&quot;, &quot;NCR&quot; })" type="code"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox4ActionPerformed"/>
-              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
@@ -449,9 +438,6 @@
                   <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[]{&quot;&quot;})" type="code"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox5ActionPerformed"/>
-              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
@@ -465,9 +451,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField22">
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField22ActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel25">
               <Properties>
@@ -499,9 +482,6 @@
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField24ActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel27">
               <Properties>
@@ -522,9 +502,6 @@
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField25">
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField25ActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel28">
               <Properties>
@@ -538,9 +515,6 @@
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField26ActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButton21">
               <Properties>
@@ -610,9 +584,6 @@
                   <Connection code="new javax.swing.DefaultComboBoxModel&lt;TiposCobrosModel&gt;(getTiposCobros())" type="code"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox6ActionPerformed"/>
-              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox&lt;TiposCobrosModel&gt;()"/>
                 <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="tiposCobrosModel = (TiposCobrosModel)jComboBox6.getSelectedItem();"/>
@@ -780,7 +751,7 @@
               <SubComponents>
                 <Component class="javax.swing.JTable" name="jTable6">
                   <Properties>
-                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" postCode="jTable6.getTableHeader().setReorderingAllowed(false);&#xa;DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();&#xa;centerRenderer.setHorizontalAlignment( JLabel.CENTER );&#xa;jTable6.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );&#xa;jTable6.getColumnModel().getColumn(2).setCellRenderer( centerRenderer );&#xa;jTable6.setSelectionModel(new ForcedListSelectionModel());&#xa;/*jTable6.getSelectionModel().addListSelectionListener(new ListSelectionListener(){&#xa;        public void valueChanged(ListSelectionEvent event) {&#xa;                if(!event.getValueIsAdjusting()){&#xa;                    ArticuloModel aux = (ArticuloModel)jTable6.getValueAt(jTable6.getSelectedRow(), 0);&#xa;                    articuloListEnvio.add(aux);&#xa;                    cargarTablaArtEnvio(aux);&#xa;                    //jTable6.clearSelection();&#xa;                }&#xa;        }&#xa;    });*/&#xa;&#xa;jTable6.addMouseListener(new MouseAdapter() {&#xa;    public void mouseClicked(MouseEvent evt) {&#xa;        int row = jTable6.rowAtPoint(evt.getPoint());&#xa;        int col = jTable6.columnAtPoint(evt.getPoint());&#xa;        if (row &gt;= 0 &amp;&amp; col &gt;= 0) {&#xa;            ArticuloModel aux = (ArticuloModel)jTable6.getValueAt(row, 0);&#xa;            articuloListEnvio.add(aux);&#xa;            cargarTablaArtEnvio(aux);&#xa;            //System.out.println(&quot;&gt;&gt;&gt;row:&quot;+row+&quot;&gt;&gt;&gt;col:&quot;+col);&#xa;        }&#xa;    }&#xa;});">
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" postCode="jTable6.getTableHeader().setReorderingAllowed(false);&#xa;DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();&#xa;centerRenderer.setHorizontalAlignment( JLabel.CENTER );&#xa;jTable6.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );&#xa;jTable6.getColumnModel().getColumn(2).setCellRenderer( centerRenderer );&#xa;jTable6.setSelectionModel(new ForcedListSelectionModel());&#xa;/*jTable6.getSelectionModel().addListSelectionListener(new ListSelectionListener(){&#xa;        public void valueChanged(ListSelectionEvent event) {&#xa;                if(!event.getValueIsAdjusting()){&#xa;                    ArticuloModel aux = (ArticuloModel)jTable6.getValueAt(jTable6.getSelectedRow(), 0);&#xa;                    articuloListEnvio.add(aux);&#xa;                    cargarTablaArtEnvio(aux);&#xa;                    //jTable6.clearSelection();&#xa;                }&#xa;        }&#xa;    });*/&#xa;&#xa;/*jTable6.addMouseListener(new MouseAdapter() {&#xa;    public void mouseClicked(MouseEvent evt) {&#xa;        int row = jTable6.rowAtPoint(evt.getPoint());&#xa;        int col = jTable6.columnAtPoint(evt.getPoint());&#xa;        if (row &gt;= 0 &amp;&amp; col &gt;= 0) {&#xa;            ArticuloModel aux = (ArticuloModel)jTable6.getValueAt(row, 0);&#xa;            articuloListEnvio.add(aux);&#xa;            cargarTablaArtEnvio(aux);&#xa;            //System.out.println(&quot;&gt;&gt;&gt;row:&quot;+row+&quot;&gt;&gt;&gt;col:&quot;+col);&#xa;        }&#xa;    }&#xa;});*/">
                       <Connection code="modelTableArt" type="code"/>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -806,6 +777,9 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTable6MouseClicked"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="DefaultTableModel modelTableArt = new DefaultTableModel() {&#xa;            public boolean isCellEditable(int row, int column) {&#xa;                return false;&#xa;            }&#xa;        };&#xa;        String[] columnNamesTableArt = {&quot;Descripci&#xf3;n&quot;, &quot;Precio&quot;, &quot;Stock&quot;};&#xa;        modelTableArt.setColumnIdentifiers(columnNamesTableArt);&#xa;        /*Object[] o = new Object[3];&#xa;        for (ArticuloModel a : articuloList) {&#xa;            o[0] = a;&#xa;            o[1] = a.getPrecioBase();&#xa;            o[2] = a.getExistencia();&#xa;            modelTableArt.addRow(o);&#xa;        }*/"/>
                   </AuxValues>

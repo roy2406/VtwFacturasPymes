@@ -28,6 +28,7 @@ public final class ApplicationConstant {
     public static final String CLIENTE_PATH = "clientes/getListaClientesLazy/{codEmpresa}/{inicio}/{cantidad}/{filtroDescripcion}/{filtroCodigo}";
     public static final String CLIENTE_COD_PATH = "clientes/getClientebyCodigo/{codEmpresa}/{codCliente}";
     public static final String CLIENTE_CANTIDAD_PATH = "clientes/getCantidadClientes/{codEmpresa}";
+    public static final String CLIENTE_CARGA_PATH = "clientes/cargaRapida/{codEmpresa}/{codVendedor}/{esPersonaFisica}/{sexo}";
     public static final String VENDEDOR_PATH = "vendedores/getListaVendedoresbyEmpresa/{codEmpresa}";
     public static final String MESAS_PATH = "mesas/getListaMesasbyEmpresabySucursal/{codEmpresa}/{codSucursal}";
     public static final String TIPOS_COBROS_PATH = "tiposCobros/getTiposCobros";

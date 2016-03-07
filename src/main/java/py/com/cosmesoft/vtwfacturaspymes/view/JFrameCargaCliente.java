@@ -6,6 +6,9 @@
 package py.com.cosmesoft.vtwfacturaspymes.view;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import py.com.cosmesoft.vtwfacturaspymes.client.ClienteClient;
 import py.com.cosmesoft.vtwfacturaspymes.dto.ClienteModel;
 import py.com.cosmesoft.vtwfacturaspymes.util.ApplicationConstant;
 
@@ -74,7 +77,7 @@ public class JFrameCargaCliente extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Es persona fisica?:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Femenino" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MASCULINO", "FEMENINO" }));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setText("*Utilize esta opción si el cliente aún no fue cargada. ");
@@ -188,7 +191,22 @@ public class JFrameCargaCliente extends javax.swing.JFrame {
         String codigo = jTextField1.getText();
         String nombre = jTextField2.getText();
         String email = jTextField3.getText();
-        //this.jFrameForm.setClienteModel(new ClienteModel(codigo,nombre,email));
+        ClienteModel clienteModel = new ClienteModel();
+        clienteModel.setCodigo(codigo);
+        clienteModel.setNombre(nombre);
+        clienteModel.setEmail(email);
+        ClienteModel clienteABM = new ClienteModel();
+
+        try {
+            clienteABM = ClienteClient.cargaRapida(clienteModel,
+                    "1",
+                    jCheckBox1.isSelected(),
+                    getSexo());
+        } catch (Exception e) {
+            e.printStackTrace();
+            dialogError();
+        }
+        this.jFrameForm.setClienteModel(clienteABM);
         //Enviar por post
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -245,4 +263,21 @@ public class JFrameCargaCliente extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
+    private static void dialogError() {
+        JOptionPane.showMessageDialog(new JFrame(),
+                "Ocurrio un error.",
+                "ERROR",
+                JOptionPane.ERROR_MESSAGE);
+    }
+
+    private String getSexo() {
+        String sexo = (String) jComboBox1.getSelectedItem();
+        String codSexo = null;
+        if (sexo.equals("MASCULINO")) {
+            codSexo = "M";
+        } else if (sexo.equals("FEMENINO")) {
+            codSexo = "F";
+        }
+        return codSexo;
+    }
 }

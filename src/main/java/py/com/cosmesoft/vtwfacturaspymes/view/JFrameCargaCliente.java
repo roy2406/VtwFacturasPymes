@@ -8,6 +8,7 @@ package py.com.cosmesoft.vtwfacturaspymes.view;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.text.AbstractDocument;
 import py.com.cosmesoft.vtwfacturaspymes.client.ClienteClient;
 import py.com.cosmesoft.vtwfacturaspymes.dto.ClienteModel;
 import py.com.cosmesoft.vtwfacturaspymes.util.ApplicationConstant;
@@ -78,6 +79,8 @@ public class JFrameCargaCliente extends javax.swing.JFrame {
         jLabel6.setText("Es persona fisica?:");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MASCULINO", "FEMENINO" }));
+
+        ((AbstractDocument) jTextField2.getDocument()).setDocumentFilter(new FiltroUpper());
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setText("*Utilize esta opción si el cliente aún no fue cargada. ");
@@ -196,10 +199,10 @@ public class JFrameCargaCliente extends javax.swing.JFrame {
         clienteModel.setNombre(nombre);
         clienteModel.setEmail(email);
         ClienteModel clienteABM = new ClienteModel();
-
+        String codVendedor = jFrameForm.getVendedorModel().getCodVendedor();
         try {
             clienteABM = ClienteClient.cargaRapida(clienteModel,
-                    "1",
+                    codVendedor,
                     jCheckBox1.isSelected(),
                     getSexo());
         } catch (Exception e) {

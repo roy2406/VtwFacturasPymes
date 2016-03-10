@@ -20,7 +20,7 @@ import py.com.cosmesoft.vtwfacturaspymes.util.ApplicationConstant;
  * @author usuario
  */
 public class VendedorClient {
-    
+
     private static String baseUri;
 
     public static List<VendedorModel> recibirVendedores() throws InterruptedException, ExecutionException {
@@ -34,8 +34,37 @@ public class VendedorClient {
                 .async()
                 .get(new GenericType<List<VendedorModel>>() {
                 });
-          List<VendedorModel> vendedorList = futureRespose.get();
+        List<VendedorModel> vendedorList = futureRespose.get();
         return vendedorList;
+    }
+
+    public static List<VendedorModel> recibirVendedorbyCodigo(String codVendedor) throws InterruptedException, ExecutionException {
+        baseUri = getBaseUri();
+        Client client = ClientBuilder.newClient();
+        Future<List<VendedorModel>> futureRespose = client
+                .target(baseUri)
+                .path(ApplicationConstant.VENDEDOR_COD_PATH)
+                .resolveTemplate("codEmpresa", ApplicationConstant.COD_EMPRESA)
+                .request()
+                .async()
+                .get(new GenericType<List<VendedorModel>>() {
+                });
+        List<VendedorModel> vendedorList = futureRespose.get();
+        return vendedorList;
+    }
+
+    public static VendedorModel recibirVendedorDefecto() throws InterruptedException, ExecutionException {
+        baseUri = getBaseUri();
+        Client client = ClientBuilder.newClient();
+        Future<VendedorModel> futureRespose = client
+                .target(baseUri)
+                .path(ApplicationConstant.VENDEDOR_DEFECTO_PATH)
+                .request()
+                .async()
+                .get(new GenericType<VendedorModel>() {
+                });
+        VendedorModel vendedor = futureRespose.get();
+        return vendedor;
     }
 
     public static String getBaseUri() {
@@ -49,6 +78,5 @@ public class VendedorClient {
         return builder.toString();
 
     }
-    
 
 }

@@ -62,6 +62,20 @@ public class ClienteClient {
         return cliente;
     }
 
+    public static ClienteModel recibirClienteDefecto() throws InterruptedException, ExecutionException {
+        baseUri = getBaseUri();
+        Client client = ClientBuilder.newClient();
+        Future<ClienteModel> futureRespose = client
+                .target(baseUri)
+                .path(ApplicationConstant.CLIENTE_DEFECTO_PATH)
+                .request()
+                .async()
+                .get(new GenericType<ClienteModel>() {
+                });
+        ClienteModel cliente = futureRespose.get();
+        return cliente;
+    }
+
     public static Long cantidadClientes() throws InterruptedException, ExecutionException {
         baseUri = getBaseUri();
         Client client = ClientBuilder.newClient();

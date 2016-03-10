@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
+import py.com.cosmesoft.vtwfacturaspymes.dto.ArticuloModel;
 import py.com.cosmesoft.vtwfacturaspymes.interfaces.Entidad;
 import py.com.cosmesoft.vtwfacturaspymes.util.ApplicationConstant;
 
@@ -97,12 +98,13 @@ class ButtonColumn extends AbstractCellEditor
         df.setMinimumFractionDigits(2);
         BigDecimal total = BigDecimal.ZERO;
         String totalStr = (String) table.getValueAt(row, 7);
+        ArticuloModel a = (ArticuloModel) table.getValueAt(row, 3);
         try {
             total = new BigDecimal((long) df.parse(totalStr));
         } catch (Exception exc) {
             exc.printStackTrace();
         }
-        this.jFrameForm.updateTotales(total.negate());
+        this.jFrameForm.updateTotales(total.negate(),a.getIva());
         this.jFrameForm.uptadeVuelto();
         dm.removeRow(row);
     }

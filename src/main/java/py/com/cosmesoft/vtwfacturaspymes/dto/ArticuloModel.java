@@ -20,6 +20,7 @@ public class ArticuloModel {
     private BigDecimal precioBase;
     private String codGrupo;
     private GrupoModel grupoModel;
+    private BigDecimal iva;
     
     public ArticuloModel() {
     }
@@ -90,6 +91,14 @@ public class ArticuloModel {
     @Override
     public String toString() {
         return this.descripcion; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public BigDecimal getIva() {
+        return iva;
+    }
+
+    public void setIva(BigDecimal iva) {
+        this.iva = iva;
     }
 
 }

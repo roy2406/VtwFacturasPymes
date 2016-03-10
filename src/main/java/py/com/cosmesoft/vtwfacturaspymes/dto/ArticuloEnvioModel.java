@@ -17,14 +17,13 @@ public class ArticuloEnvioModel {
     private BigDecimal cantidad;
     private BigDecimal montoTotal;
     private ArticuloModel articuloModel;
-    private GrupoModel grupoModel;
+    private BigDecimal totalIVA;
 
-    public GrupoModel getGrupoModel() {
-        return grupoModel;
-    }
-
-    public void setGrupoModel(GrupoModel grupoModel) {
-        this.grupoModel = grupoModel;
+    public ArticuloEnvioModel(BigDecimal cantidad, BigDecimal montoTotal, ArticuloModel articuloModel, BigDecimal totalIVA) {
+        this.cantidad = cantidad;
+        this.montoTotal = montoTotal;
+        this.articuloModel = articuloModel;
+        this.totalIVA = totalIVA;
     }
 
     public BigDecimal getCantidad() {
@@ -49,6 +48,14 @@ public class ArticuloEnvioModel {
 
     public void setArticuloModel(ArticuloModel articuloModel) {
         this.articuloModel = articuloModel;
+    }
+
+    public BigDecimal getTotalIVA() {
+        return totalIVA;
+    }
+
+    public void setTotalIVA(BigDecimal totalIVA) {
+        this.totalIVA = totalIVA;
     }
 
     @Override

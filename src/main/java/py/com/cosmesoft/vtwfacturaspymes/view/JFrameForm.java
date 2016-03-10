@@ -46,10 +46,13 @@ import py.com.cosmesoft.vtwfacturaspymes.dto.VendedorModel;
 import py.com.cosmesoft.vtwfacturaspymes.util.ApplicationConstant;
 import py.com.cosmesoft.vtwfacturaspymes.client.ArticuloClient;
 import py.com.cosmesoft.vtwfacturaspymes.client.ClienteClient;
+import py.com.cosmesoft.vtwfacturaspymes.client.FacturaClient;
 import py.com.cosmesoft.vtwfacturaspymes.client.GenericClient;
 import py.com.cosmesoft.vtwfacturaspymes.client.GrupoClient;
 import py.com.cosmesoft.vtwfacturaspymes.client.SerieClient;
 import py.com.cosmesoft.vtwfacturaspymes.client.TiposCobrosClient;
+import py.com.cosmesoft.vtwfacturaspymes.client.VendedorClient;
+import py.com.cosmesoft.vtwfacturaspymes.dto.CabeceraFacturaModel;
 //import py.com.cosmesoft.vtwfacturaspymes.util.ArticuloClient;
 //import py.com.cosmesoft.vtwfacturaspymes.util.GrupoClient;
 
@@ -65,7 +68,8 @@ public class JFrameForm extends javax.swing.JFrame {
     private final ImageIcon img;
     private List<GrupoModel> grupoList;
     private List<ArticuloModel> articuloList;
-    private List<ArticuloModel> articuloListEnvio;
+    private List<ArticuloEnvioModel> articuloListEnvio;
+    private CabeceraFacturaModel cabeceraFacturaModel;
     private VendedorModel vendedorModel;
     private ClienteModel clienteModel;
     private MesaModel mesaModel;
@@ -76,11 +80,17 @@ public class JFrameForm extends javax.swing.JFrame {
 
     public JFrameForm() {
         articuloList = new ArrayList<ArticuloModel>();
-        articuloListEnvio = new ArrayList<ArticuloModel>();
+        //articuloListEnvio = new ArrayList<ArticuloModel>();
         getGrupoList();
         img = new ImageIcon(ApplicationConstant.CARPETA_IMAGENES + "\\logoSantafe.png");
         initComponents();
-
+        try {
+            setClienteModel(ClienteClient.recibirClienteDefecto());
+            setVendedorModel(VendedorClient.recibirVendedorDefecto());
+        } catch (Exception e) {
+            e.printStackTrace();
+            dialogError();
+        }
         /**/
     }
 
@@ -176,6 +186,11 @@ public class JFrameForm extends javax.swing.JFrame {
         jButton1.setIcon(new javax.swing.ImageIcon(ApplicationConstant.CARPETA_ICONOS+"\\diskette.png"));
         jButton1.setText("Guardar");
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton1);
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -379,11 +394,11 @@ public class JFrameForm extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField29, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextField29, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField22))
+                        .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
@@ -432,7 +447,7 @@ public class JFrameForm extends javax.swing.JFrame {
                 .addContainerGap(1294, Short.MAX_VALUE))
         );
 
-        jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jComboBox4, jComboBox5, jTextField22, jTextField29});
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jComboBox4, jComboBox5});
 
         jPanel3Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTextField24, jTextField28});
 
@@ -870,33 +885,7 @@ public class JFrameForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        setMesaModel(new MesaModel());
-        setVendedorModel(new VendedorModel());
-        setClienteModel(new ClienteModel());
-        setPedidoCabeceraModel(new PedidoCabeceraModel());
-        jTextField22.setText(null);
-        jTextField29.setText(null);
-        jTextField26.setText(null);
-
-        /*LIMPIAR TABLA DE ARTICULOS*/
-        DefaultTableModel dm = (DefaultTableModel) jTable4.getModel();
-        int rowCount = dm.getRowCount();
-        for (int i = rowCount - 1; i >= 0; i--) {
-            dm.removeRow(i);
-        }
-
-        /*LIMPIAR PANEL TOTALES*/
-        jTextField30.setText(null);
-        jTextField31.setText(null);
-        jTextField32.setText(null);
-        jTextField33.setText(null);
-        jTextField34.setText(null);
-        jTextField35.setText(null);
-        jTextField36.setText(null);
-        jTextField37.setText(null);
-        jTextField38.setText(null);
-        jTextField39.setText(null);
-        jTextField40.setText(null);
+        limpiarDatos();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTable4PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTable4PropertyChange
@@ -913,6 +902,7 @@ public class JFrameForm extends javax.swing.JFrame {
             //            dfs.setGroupingSeparator('.');
             //            String pattern = df1.toPattern();
             //            DecimalFormat df2 = new DecimalFormat(pattern, dfs);
+            ArticuloModel a = (ArticuloModel) modelTableArt.getValueAt(row, 3);
             String precioStr = (String) modelTableArt.getValueAt(row, 5);
             String cantidadStr = (String) modelTableArt.getValueAt(row, 4);
             String montoOriginalStr = (String) modelTableArt.getValueAt(row, 7);
@@ -929,7 +919,7 @@ public class JFrameForm extends javax.swing.JFrame {
             }
             BigDecimal montoTotal = precio.multiply(cantidad);
             modelTableArt.setValueAt(df.format(montoTotal), row, 7);
-            updateTotales(montoTotal.subtract(montoOriginal));
+            updateTotales(montoTotal.subtract(montoOriginal), a.getIva());
             uptadeVuelto();
             jTable4.setModel(modelTableArt);
             modelTableArt.fireTableDataChanged();
@@ -1006,11 +996,16 @@ public class JFrameForm extends javax.swing.JFrame {
         int col = jTable6.columnAtPoint(evt.getPoint());
         if (row >= 0 && col >= 0) {
             ArticuloModel aux = (ArticuloModel) jTable6.getValueAt(row, 0);
-            articuloListEnvio.add(aux);
+            //articuloListEnvio.add(aux);
             cargarTablaArtEnvio(aux);
             //System.out.println(">>>row:"+row+">>>col:"+col);
         }
     }//GEN-LAST:event_jTable6MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        prepararDetalleFactura();
+        prepararCabeceraFactura();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1022,9 +1017,9 @@ public class JFrameForm extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+            //javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
             //javax.swing.UIManager.setLookAndFeel("com.pagosoft.plaf.PgsLookAndFeel");
-            //javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+            javax.swing.UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
             //javax.swing.UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
             //javax.swing.UIManager.setLookAndFeel("com.pagosoft.plaf.PgsLookAndFeel");
             //javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -1129,20 +1124,6 @@ public class JFrameForm extends javax.swing.JFrame {
     private org.jdesktop.swingx.JXDatePicker jXDatePicker1;
     // End of variables declaration//GEN-END:variables
 
-    private static void dialogError() {
-        JOptionPane.showMessageDialog(new JFrame(),
-                "Ocurrio un error.",
-                "ERROR",
-                JOptionPane.ERROR_MESSAGE);
-    }
-
-    private static void dialogWarning(String msj) {
-        JOptionPane.showMessageDialog(new JFrame(),
-                msj,
-                "WARNING",
-                JOptionPane.WARNING_MESSAGE);
-    }
-
     private void cargarTablaArt() {
         DefaultTableModel modelTableArt = (DefaultTableModel) jTable6.getModel();
         modelTableArt.setRowCount(0);
@@ -1183,7 +1164,7 @@ public class JFrameForm extends javax.swing.JFrame {
                 modelTableArt.setValueAt(df.format(montoTotal), i, 7);
                 jTable4.setModel(modelTableArt);
                 modelTableArt.fireTableDataChanged();
-                updateTotales(a.getPrecioBase());
+                updateTotales(a.getPrecioBase(), a.getIva());
                 uptadeVuelto();
                 return;
             }
@@ -1201,11 +1182,11 @@ public class JFrameForm extends javax.swing.JFrame {
         modelTableArt.addRow(o);
         jTable4.setModel(modelTableArt);
         modelTableArt.fireTableDataChanged();
-        updateTotales(a.getPrecioBase());
+        updateTotales(a.getPrecioBase(), a.getIva());
         uptadeVuelto();
     }
 
-    public void updateTotales(BigDecimal num) {
+    public void updateTotales(BigDecimal num, BigDecimal iva) {
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(0);
         df.setMinimumFractionDigits(0);
@@ -1228,14 +1209,23 @@ public class JFrameForm extends javax.swing.JFrame {
         BigDecimal totalDolar
                 = totalActual.divide(ApplicationConstant.DOLAR, 2, RoundingMode.HALF_DOWN);
         jTextField34.setText(df.format(totalDolar));
+
+        /*SECCION IVA*/
+        BigDecimal totalIVA = BigDecimal.ZERO;
+        df.setMinimumFractionDigits(2);
+        df.setMinimumFractionDigits(2);
         /*IVA 5%*/
-        jTextField33.setText(df.format(BigDecimal.ZERO));
+        if (iva.compareTo(new BigDecimal(5)) == 0) {
+            totalIVA
+                    = totalActual.divide(new BigDecimal(21), 2, RoundingMode.HALF_DOWN);
+            jTextField33.setText(df.format(totalIVA));
+        }
         /*IVA 10%*/
-        df.setMinimumFractionDigits(2);
-        df.setMinimumFractionDigits(2);
-        BigDecimal totalIVA10
-                = totalActual.divide(new BigDecimal(11), 2, RoundingMode.HALF_DOWN);
-        jTextField39.setText(df.format(totalIVA10));
+        if (iva.compareTo(new BigDecimal(10)) == 0) {
+            totalIVA
+                    = totalActual.divide(new BigDecimal(11), 2, RoundingMode.HALF_DOWN);
+            jTextField39.setText(df.format(totalIVA));
+        }
         /*EXENTAS*/
         jTextField32.setText(df.format(BigDecimal.ZERO));
         /*TOTAL GENERAL R$*/
@@ -1245,7 +1235,7 @@ public class JFrameForm extends javax.swing.JFrame {
         /*TOTAL IVA*/
         df.setMinimumFractionDigits(2);
         df.setMaximumFractionDigits(2);
-        jTextField37.setText(df.format(totalIVA10));
+        jTextField37.setText(df.format(totalIVA));
     }
 
     public void uptadeVuelto() {
@@ -1270,7 +1260,11 @@ public class JFrameForm extends javax.swing.JFrame {
         }
     }
 
-    
+    public javax.swing.JTextField getjTextField27() {
+        return this.jTextField27;
+    }
+
+    //<editor-fold defaultstate="collapsed" desc="Getters and Setters">
     public VendedorModel getVendedorModel() {
         return vendedorModel;
     }
@@ -1326,22 +1320,6 @@ public class JFrameForm extends javax.swing.JFrame {
         return tiposCobrosArray;
     }
 
-    private String[] getSeries() {
-        String[] seriesArray = new String[0];
-        List<String> seriesList = new ArrayList<String>();
-        try {
-            seriesList = SerieClient.recibirSeries(usuarioLogueado.getCodUsuario());
-            seriesArray = new String[seriesList.size()];
-            for (int i = 0; i < seriesArray.length; i++) {
-                seriesArray[i] = seriesList.get(i);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            dialogError();
-        }
-        return seriesArray;
-    }
-
     public UsuarioModel getUsuarioLogueado() {
         return usuarioLogueado;
     }
@@ -1359,14 +1337,187 @@ public class JFrameForm extends javax.swing.JFrame {
         }
     }
 
+    private String[] getSeries() {
+        String[] seriesArray = new String[0];
+        List<String> seriesList = new ArrayList<String>();
+        try {
+            seriesList = SerieClient.recibirSeries(usuarioLogueado.getCodUsuario());
+            seriesArray = new String[seriesList.size()];
+            for (int i = 0; i < seriesArray.length; i++) {
+                seriesArray[i] = seriesList.get(i);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            dialogError();
+        }
+        return seriesArray;
+    }
+
     public void setSeries(String[] series) {
         jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(series));
     }
-
-    public javax.swing.JTextField getjTextField27() {
-        return this.jTextField27;
-    }
-    
-    //<editor-fold defaultstate="collapsed" desc="Lazy list Accesos">
     //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="Dialogos de advertencia">
+    private static void dialogError() {
+        JOptionPane.showMessageDialog(new JFrame(),
+                "Ocurrio un error.",
+                "ERROR",
+                JOptionPane.ERROR_MESSAGE);
+    }
+
+    private static void dialogWarning(String msj) {
+        JOptionPane.showMessageDialog(new JFrame(),
+                msj,
+                "WARNING",
+                JOptionPane.WARNING_MESSAGE);
+    }
+
+    private static void dialogExito() {
+        JOptionPane.showMessageDialog(new JFrame(),
+                "La operación se realizo correctamente.",
+                "EXITO",
+                JOptionPane.INFORMATION_MESSAGE);
+    }
+    //</editor-fold> 
+
+    //<editor-fold defaultstate="collapsed" desc="Preparar Factura envio">
+    private void prepararDetalleFactura() {
+        this.articuloListEnvio = new ArrayList<ArticuloEnvioModel>();
+        DefaultTableModel modelTableArt = (DefaultTableModel) jTable4.getModel();
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(0);
+        df.setMinimumFractionDigits(0);
+
+        for (int row = 0; row < jTable4.getRowCount(); row++) {
+            ArticuloEnvioModel aux;
+            ArticuloModel a = (ArticuloModel) modelTableArt.getValueAt(row, 3);
+            //String precioStr = (String) modelTableArt.getValueAt(row, 5);
+            String cantidadStr = (String) modelTableArt.getValueAt(row, 4);
+            String montoOriginalStr = (String) modelTableArt.getValueAt(row, 7);
+            //BigDecimal precio = BigDecimal.ZERO;
+            BigDecimal cantidad = BigDecimal.ZERO;
+            BigDecimal montoOriginal = BigDecimal.ZERO;
+            try {
+                //precio = new BigDecimal((long) df.parse(precioStr));
+                cantidad = new BigDecimal((long) df.parse(cantidadStr));
+                montoOriginal = new BigDecimal((long) df.parse(montoOriginalStr));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            /*CALCULA EL IVA PARA GUARDAR*/
+            BigDecimal totalIva = BigDecimal.ZERO;
+            df.setMinimumFractionDigits(2);
+            df.setMinimumFractionDigits(2);
+            if (a.getIva().compareTo(new BigDecimal(5)) == 0) {
+                totalIva = montoOriginal.divide(new BigDecimal(21), 2, RoundingMode.HALF_DOWN);
+            } else if (a.getIva().compareTo(new BigDecimal(10)) == 0) {
+                totalIva = montoOriginal.divide(new BigDecimal(11), 2, RoundingMode.HALF_DOWN);
+
+            }
+
+            aux = new ArticuloEnvioModel(cantidad, montoOriginal, a, totalIva);
+            articuloListEnvio.add(aux);
+        }
+
+    }
+
+    private void prepararCabeceraFactura() {
+        cabeceraFacturaModel = new CabeceraFacturaModel();
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(0);
+        df.setMinimumFractionDigits(0);
+
+        BigDecimal totalActual = BigDecimal.ZERO;
+        BigDecimal pago = BigDecimal.ZERO;
+        BigDecimal totalIVA = BigDecimal.ZERO;
+        try {
+            if (jTextField40.getText() != null && !jTextField40.getText().isEmpty()) {
+                totalActual = new BigDecimal((long) df.parse(jTextField40.getText()));
+            }
+            if (jTextField30.getText() != null && !jTextField30.getText().isEmpty()) {
+                pago = new BigDecimal((long) df.parse(jTextField30.getText()));
+            }
+            df.setMinimumFractionDigits(2);
+            df.setMaximumFractionDigits(2);
+            if (jTextField37.getText() != null && !jTextField37.getText().isEmpty()) {
+                totalIVA = new BigDecimal((double) df.parse(jTextField37.getText()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        BigDecimal vuelto = pago.subtract(totalActual);
+        if (vuelto.compareTo(BigDecimal.ZERO) < 0) {
+            dialogWarning("El pago es menor que el vuelto no se puede registrar la venta");
+            return;
+        }
+        cabeceraFacturaModel.setVuelto(vuelto);
+        cabeceraFacturaModel.setPago(pago);
+        cabeceraFacturaModel.setMontoTotal(totalActual);
+        cabeceraFacturaModel.setTotalIva(totalIVA);
+        cabeceraFacturaModel.setDetalle(articuloListEnvio);
+        cabeceraFacturaModel.setCodEmpresa(ApplicationConstant.COD_EMPRESA);
+        cabeceraFacturaModel.setCodSucursal(ApplicationConstant.COD_SUCURSAL);
+        cabeceraFacturaModel.setUsuarioLogueado(usuarioLogueado);
+        cabeceraFacturaModel.setClienteModel(clienteModel);
+        cabeceraFacturaModel.setFecha(jXDatePicker1.getDate());
+        cabeceraFacturaModel.setMesaModel(mesaModel);
+        cabeceraFacturaModel.setVendedorModel(vendedorModel);
+        cabeceraFacturaModel.setNumero(jTextField22.getText());
+        cabeceraFacturaModel.setTipo((String) jComboBox4.getSelectedItem());
+        cabeceraFacturaModel.setTiposCobroModel((TiposCobrosModel) jComboBox6.getSelectedItem());
+        cabeceraFacturaModel.setPedidoCabeceraModel(pedidoCabeceraModel);
+        cabeceraFacturaModel.setRuc(jTextField29.getText());
+        cabeceraFacturaModel.setSerie((String) jComboBox5.getSelectedItem());
+
+        try {
+            FacturaClient.guardarFactura(cabeceraFacturaModel);
+        } catch (Exception e) {
+            e.printStackTrace();
+            dialogError();
+            return;
+        }
+        dialogExito();
+        limpiarDatos();
+
+    }
+    //</editor-fold> 
+
+    private void limpiarDatos() {
+        setMesaModel(new MesaModel());
+        setVendedorModel(new VendedorModel());
+        setClienteModel(new ClienteModel());
+        setPedidoCabeceraModel(new PedidoCabeceraModel());
+        jTextField22.setText(null);
+        jTextField29.setText(null);
+        jTextField26.setText(null);
+
+        /*LIMPIAR TABLA DE ARTICULOS*/
+        DefaultTableModel dm = (DefaultTableModel) jTable4.getModel();
+        int rowCount = dm.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            dm.removeRow(i);
+        }
+
+        /*LIMPIAR PANEL TOTALES*/
+        jTextField30.setText(null);
+        jTextField31.setText(null);
+        jTextField32.setText(null);
+        jTextField33.setText(null);
+        jTextField34.setText(null);
+        jTextField35.setText(null);
+        jTextField36.setText(null);
+        jTextField37.setText(null);
+        jTextField38.setText(null);
+        jTextField39.setText(null);
+        jTextField40.setText(null);
+
+        try {
+            setClienteModel(ClienteClient.recibirClienteDefecto());
+            setVendedorModel(VendedorClient.recibirVendedorDefecto());
+        } catch (Exception e) {
+            e.printStackTrace();
+            dialogError();
+        }
+    }
 }

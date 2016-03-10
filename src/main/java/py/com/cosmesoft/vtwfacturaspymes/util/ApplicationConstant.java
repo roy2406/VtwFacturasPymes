@@ -29,13 +29,17 @@ public final class ApplicationConstant {
     public static final String CLIENTE_COD_PATH = "clientes/getClientebyCodigo/{codEmpresa}/{codCliente}";
     public static final String CLIENTE_CANTIDAD_PATH = "clientes/getCantidadClientes/{codEmpresa}";
     public static final String CLIENTE_CARGA_PATH = "clientes/cargaRapida/{codEmpresa}/{codVendedor}/{esPersonaFisica}/{sexo}";
+    public static final String CLIENTE_DEFECTO_PATH = "clientes/getClienteDefecto";
     public static final String VENDEDOR_PATH = "vendedores/getListaVendedoresbyEmpresa/{codEmpresa}";
+    public static final String VENDEDOR_DEFECTO_PATH = "vendedores/getVendedorDefecto";
+    public static final String VENDEDOR_COD_PATH = "vendedores/getVendedorbycodEmpresabyCodigo/{codEmpresa}/{codVendedor}";
     public static final String MESAS_PATH = "mesas/getListaMesasbyEmpresabySucursal/{codEmpresa}/{codSucursal}";
     public static final String TIPOS_COBROS_PATH = "tiposCobros/getTiposCobros";
     public static final String USUARIO_PATH = "usuarios/getUsuario/{userName}";
     public static final String SERIES_PATH = "series/getSeries/{userName}";
     public static final String PEDIDOS_PATH = "mesas/getPedidosMesabyEmpresabySucursal/{codEmpresa}/{codSucursal}";
-
+    public static final String FACTURAS_PATH = "facturas/guardarFactura";
+    
     /*CARPETAS*/
     public static final String CARPETA_ICONOS = "J:\\proyectos-cosmesoft\\VtwFacturasPymes\\src\\main\\java\\recursos\\icon";
     public static final String CARPETA_IMAGENES = "J:\\proyectos-cosmesoft\\VtwFacturasPymes\\src\\main\\java\\recursos\\img";
@@ -50,4 +54,8 @@ public final class ApplicationConstant {
     public static final String ELIMINAR = "ELIMINAR_BTN";
     public static final String EDITAR = "EDITAR_BTN";
     public static final BigDecimal DOLAR = new BigDecimal(5670);
+
+    /**/
+    public static final String CODIGO_CLIENTE_DEFECTO = "COD_CLIENTE_DEFECTO";
+    public static final String COD_VENDEDOR_DEFECTO = "COD_VENDEDOR_DEFECTO";
 }
